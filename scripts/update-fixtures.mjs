@@ -19,6 +19,121 @@ const KNOCKOUT_STAGES = new Set([
   "FINAL"
 ]);
 
+const SPECIAL_TEAM_FLAGS = {
+  ENG: "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+  NIR: "🇬🇧",
+  SCO: "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
+  WAL: "🏴󠁧󠁢󠁷󠁬󠁳󠁿"
+};
+
+const FIFA_TLA_TO_COUNTRY_CODE = {
+  AFG: "AF",
+  ALB: "AL",
+  ALG: "DZ",
+  AND: "AD",
+  ANG: "AO",
+  ARG: "AR",
+  ARM: "AM",
+  AUS: "AU",
+  AUT: "AT",
+  AZE: "AZ",
+  BAH: "BS",
+  BHR: "BH",
+  BAN: "BD",
+  BEL: "BE",
+  BEN: "BJ",
+  BIH: "BA",
+  BLR: "BY",
+  BOL: "BO",
+  BRA: "BR",
+  BUL: "BG",
+  BFA: "BF",
+  CMR: "CM",
+  CAN: "CA",
+  CPV: "CV",
+  CHI: "CL",
+  CHN: "CN",
+  COL: "CO",
+  CRC: "CR",
+  CRO: "HR",
+  CUB: "CU",
+  DOM: "DO",
+  CZE: "CZ",
+  COD: "CD",
+  CIV: "CI",
+  CUR: "CW",
+  DEN: "DK",
+  ECU: "EC",
+  EGY: "EG",
+  ESP: "ES",
+  FIN: "FI",
+  FRA: "FR",
+  GAB: "GA",
+  GAM: "GM",
+  GEO: "GE",
+  GUA: "GT",
+  GER: "DE",
+  GHA: "GH",
+  GRE: "GR",
+  GUI: "GN",
+  HAI: "HT",
+  HON: "HN",
+  HUN: "HU",
+  IDN: "ID",
+  IRL: "IE",
+  IRN: "IR",
+  IRQ: "IQ",
+  ISL: "IS",
+  ISR: "IL",
+  ITA: "IT",
+  JAM: "JM",
+  JOR: "JO",
+  JPN: "JP",
+  KOR: "KR",
+  KSA: "SA",
+  LBN: "LB",
+  KUW: "KW",
+  MEX: "MX",
+  MAR: "MA",
+  MLI: "ML",
+  MKD: "MK",
+  NED: "NL",
+  NGA: "NG",
+  NOR: "NO",
+  NZL: "NZ",
+  OMA: "OM",
+  PAN: "PA",
+  PAR: "PY",
+  PER: "PE",
+  POL: "PL",
+  PLE: "PS",
+  POR: "PT",
+  QAT: "QA",
+  ROU: "RO",
+  RSA: "ZA",
+  RUS: "RU",
+  SEN: "SN",
+  SRB: "RS",
+  SUI: "CH",
+  SLV: "SV",
+  SVK: "SK",
+  SVN: "SI",
+  SWE: "SE",
+  SUR: "SR",
+  SYR: "SY",
+  TUN: "TN",
+  THA: "TH",
+  TRI: "TT",
+  TUR: "TR",
+  UKR: "UA",
+  UAE: "AE",
+  URU: "UY",
+  USA: "US",
+  UZB: "UZ",
+  VEN: "VE",
+  VIE: "VN"
+};
+
 if (!TOKEN) {
   throw new Error("Missing FOOTBALL_DATA_TOKEN. Add it as a GitHub Actions repository secret.");
 }
@@ -132,13 +247,15 @@ function normalizeMatch(apiMatch, previousMatches, lockMinutesBeforeKickoff) {
 function normalizeTeam(apiTeam, previousTeam, side, matchId) {
   const code = apiTeam?.tla || apiTeam?.shortName || apiTeam?.name || previousTeam?.shortName || side;
   const id = previousTeam?.id || slug(code || `${side}-${matchId}`);
+  const shortName = apiTeam?.tla || apiTeam?.shortName || previousTeam?.shortName || "TBD";
+  const flag = flagForTeam(apiTeam, previousTeam, shortName);
 
   return {
     id,
     footballDataTeamId: apiTeam?.id ?? previousTeam?.footballDataTeamId ?? null,
     name: apiTeam?.name || previousTeam?.name || `${capitalize(side)} TBD`,
-    shortName: apiTeam?.tla || apiTeam?.shortName || previousTeam?.shortName || "TBD",
-    flag: previousTeam?.flag || flagEmoji(apiTeam?.area?.code || apiTeam?.tla)
+    shortName,
+    flag
   };
 }
 
@@ -237,6 +354,33 @@ function flagEmoji(countryCode) {
   return [...countryCode]
     .map((char) => String.fromCodePoint(127397 + char.charCodeAt(0)))
     .join("");
+}
+
+function flagForTeam(apiTeam, previousTeam, shortName) {
+  const tla = String(apiTeam?.tla || shortName || "").toUpperCase();
+  const specialFlag = SPECIAL_TEAM_FLAGS[tla];
+
+  if (specialFlag) {
+    return specialFlag;
+  }
+
+  const countryCode = countryCodeForTeam(apiTeam, tla);
+  return flagEmoji(countryCode) || previousTeam?.flag || "";
+}
+
+function countryCodeForTeam(apiTeam, tla) {
+  const possibleCodes = [
+    apiTeam?.area?.code,
+    apiTeam?.countryCode,
+    FIFA_TLA_TO_COUNTRY_CODE[tla]
+  ];
+
+  const exactCode = possibleCodes.find((code) => typeof code === "string" && /^[A-Z]{2}$/.test(code));
+  if (exactCode) {
+    return exactCode;
+  }
+
+  return "";
 }
 
 function slug(value) {
