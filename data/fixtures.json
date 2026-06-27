@@ -5,41 +5,45 @@
     "stageStart": "Round of 32",
     "source": "https://www.football-data.org/"
   },
-  "updatedAtUtc": "2026-06-27T00:00:00Z",
+  "updatedAtUtc": "2026-06-27T06:45:30.899Z",
   "lockMinutesBeforeKickoff": 15,
   "api": {
     "competitionCode": "WC",
     "season": "2026",
     "endpoint": "https://api.football-data.org/v4/competitions/WC/matches?season=2026",
-    "lastStatus": null,
-    "lastCheckedAtUtc": null,
+    "lastStatus": 200,
+    "lastCheckedAtUtc": "2026-06-27T06:45:30.894Z",
     "throttle": {
-      "apiVersion": null,
-      "authenticatedClient": null,
-      "requestCounterResetSeconds": null,
+      "apiVersion": "v4",
+      "authenticatedClient": "Liam",
+      "requestCounterResetSeconds": 60,
       "requestsAvailable": null
     }
   },
   "matches": [
     {
-      "id": "wc26-r32-01",
-      "footballDataMatchId": null,
+      "id": "fd-537417",
+      "footballDataMatchId": 537417,
       "stage": "Round of 32",
-      "kickoffUtc": "2026-07-04T19:00:00Z",
-      "lockAtUtc": "2026-07-04T18:45:00Z",
+      "apiStage": "LAST_32",
+      "matchday": null,
+      "kickoffUtc": "2026-06-28T19:00:00Z",
+      "lockAtUtc": "2026-06-28T18:45:00.000Z",
       "locked": false,
-      "status": "SCHEDULED",
+      "status": "TIMED",
       "homeTeam": {
-        "id": "arg",
-        "name": "Argentina",
-        "shortName": "ARG",
-        "flag": "🇦🇷"
+        "id": "rsa",
+        "footballDataTeamId": 774,
+        "name": "South Africa",
+        "shortName": "RSA",
+        "flag": ""
       },
       "awayTeam": {
-        "id": "den",
-        "name": "Denmark",
-        "shortName": "DEN",
-        "flag": "🇩🇰"
+        "id": "can",
+        "footballDataTeamId": 828,
+        "name": "Canada",
+        "shortName": "CAN",
+        "flag": ""
       },
       "score": {
         "home": null,
@@ -48,24 +52,28 @@
       "winnerTeamId": null
     },
     {
-      "id": "wc26-r32-02",
-      "footballDataMatchId": null,
+      "id": "fd-537423",
+      "footballDataMatchId": 537423,
       "stage": "Round of 32",
-      "kickoffUtc": "2026-07-05T02:00:00Z",
-      "lockAtUtc": "2026-07-05T01:45:00Z",
+      "apiStage": "LAST_32",
+      "matchday": null,
+      "kickoffUtc": "2026-06-29T17:00:00Z",
+      "lockAtUtc": "2026-06-29T16:45:00.000Z",
       "locked": false,
-      "status": "SCHEDULED",
+      "status": "TIMED",
       "homeTeam": {
         "id": "bra",
+        "footballDataTeamId": 764,
         "name": "Brazil",
         "shortName": "BRA",
-        "flag": "🇧🇷"
+        "flag": ""
       },
       "awayTeam": {
         "id": "jpn",
+        "footballDataTeamId": 766,
         "name": "Japan",
         "shortName": "JPN",
-        "flag": "🇯🇵"
+        "flag": ""
       },
       "score": {
         "home": null,
@@ -74,24 +82,28 @@
       "winnerTeamId": null
     },
     {
-      "id": "wc26-r32-03",
-      "footballDataMatchId": null,
+      "id": "fd-537415",
+      "footballDataMatchId": 537415,
       "stage": "Round of 32",
-      "kickoffUtc": "2026-07-05T19:00:00Z",
-      "lockAtUtc": "2026-07-05T18:45:00Z",
+      "apiStage": "LAST_32",
+      "matchday": null,
+      "kickoffUtc": "2026-06-29T20:30:00Z",
+      "lockAtUtc": "2026-06-29T20:15:00.000Z",
       "locked": false,
-      "status": "SCHEDULED",
+      "status": "TIMED",
       "homeTeam": {
-        "id": "fra",
-        "name": "France",
-        "shortName": "FRA",
-        "flag": "🇫🇷"
+        "id": "ger",
+        "footballDataTeamId": 759,
+        "name": "Germany",
+        "shortName": "GER",
+        "flag": ""
       },
       "awayTeam": {
-        "id": "usa",
-        "name": "United States",
-        "shortName": "USA",
-        "flag": "🇺🇸"
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
       },
       "score": {
         "home": null,
@@ -100,24 +112,868 @@
       "winnerTeamId": null
     },
     {
-      "id": "wc26-r32-04",
-      "footballDataMatchId": null,
+      "id": "fd-537418",
+      "footballDataMatchId": 537418,
       "stage": "Round of 32",
-      "kickoffUtc": "2026-07-06T02:00:00Z",
-      "lockAtUtc": "2026-07-06T01:45:00Z",
+      "apiStage": "LAST_32",
+      "matchday": null,
+      "kickoffUtc": "2026-06-30T01:00:00Z",
+      "lockAtUtc": "2026-06-30T00:45:00.000Z",
       "locked": false,
-      "status": "SCHEDULED",
+      "status": "TIMED",
       "homeTeam": {
-        "id": "eng",
-        "name": "England",
-        "shortName": "ENG",
-        "flag": "🏴"
+        "id": "ned",
+        "footballDataTeamId": 8601,
+        "name": "Netherlands",
+        "shortName": "NED",
+        "flag": ""
       },
       "awayTeam": {
         "id": "mar",
+        "footballDataTeamId": 815,
         "name": "Morocco",
         "shortName": "MAR",
-        "flag": "🇲🇦"
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537424",
+      "footballDataMatchId": 537424,
+      "stage": "Round of 32",
+      "apiStage": "LAST_32",
+      "matchday": null,
+      "kickoffUtc": "2026-06-30T17:00:00Z",
+      "lockAtUtc": "2026-06-30T16:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "civ",
+        "footballDataTeamId": 1935,
+        "name": "Ivory Coast",
+        "shortName": "CIV",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537416",
+      "footballDataMatchId": 537416,
+      "stage": "Round of 32",
+      "apiStage": "LAST_32",
+      "matchday": null,
+      "kickoffUtc": "2026-06-30T21:00:00Z",
+      "lockAtUtc": "2026-06-30T20:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "home",
+        "footballDataTeamId": null,
+        "name": "Home TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537425",
+      "footballDataMatchId": 537425,
+      "stage": "Round of 32",
+      "apiStage": "LAST_32",
+      "matchday": null,
+      "kickoffUtc": "2026-07-01T01:00:00Z",
+      "lockAtUtc": "2026-07-01T00:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "mex",
+        "footballDataTeamId": 769,
+        "name": "Mexico",
+        "shortName": "MEX",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537426",
+      "footballDataMatchId": 537426,
+      "stage": "Round of 32",
+      "apiStage": "LAST_32",
+      "matchday": null,
+      "kickoffUtc": "2026-07-01T16:00:00Z",
+      "lockAtUtc": "2026-07-01T15:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "home",
+        "footballDataTeamId": null,
+        "name": "Home TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537422",
+      "footballDataMatchId": 537422,
+      "stage": "Round of 32",
+      "apiStage": "LAST_32",
+      "matchday": null,
+      "kickoffUtc": "2026-07-01T20:00:00Z",
+      "lockAtUtc": "2026-07-01T19:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "home",
+        "footballDataTeamId": null,
+        "name": "Home TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537421",
+      "footballDataMatchId": 537421,
+      "stage": "Round of 32",
+      "apiStage": "LAST_32",
+      "matchday": null,
+      "kickoffUtc": "2026-07-02T00:00:00Z",
+      "lockAtUtc": "2026-07-01T23:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "usa",
+        "footballDataTeamId": 771,
+        "name": "United States",
+        "shortName": "USA",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "bih",
+        "footballDataTeamId": 1060,
+        "name": "Bosnia-Herzegovina",
+        "shortName": "BIH",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537420",
+      "footballDataMatchId": 537420,
+      "stage": "Round of 32",
+      "apiStage": "LAST_32",
+      "matchday": null,
+      "kickoffUtc": "2026-07-02T19:00:00Z",
+      "lockAtUtc": "2026-07-02T18:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "home",
+        "footballDataTeamId": null,
+        "name": "Home TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537419",
+      "footballDataMatchId": 537419,
+      "stage": "Round of 32",
+      "apiStage": "LAST_32",
+      "matchday": null,
+      "kickoffUtc": "2026-07-02T23:00:00Z",
+      "lockAtUtc": "2026-07-02T22:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "home",
+        "footballDataTeamId": null,
+        "name": "Home TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537429",
+      "footballDataMatchId": 537429,
+      "stage": "Round of 32",
+      "apiStage": "LAST_32",
+      "matchday": null,
+      "kickoffUtc": "2026-07-03T03:00:00Z",
+      "lockAtUtc": "2026-07-03T02:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "sui",
+        "footballDataTeamId": 788,
+        "name": "Switzerland",
+        "shortName": "SUI",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537428",
+      "footballDataMatchId": 537428,
+      "stage": "Round of 32",
+      "apiStage": "LAST_32",
+      "matchday": null,
+      "kickoffUtc": "2026-07-03T18:00:00Z",
+      "lockAtUtc": "2026-07-03T17:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "aus",
+        "footballDataTeamId": 779,
+        "name": "Australia",
+        "shortName": "AUS",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537427",
+      "footballDataMatchId": 537427,
+      "stage": "Round of 32",
+      "apiStage": "LAST_32",
+      "matchday": null,
+      "kickoffUtc": "2026-07-03T22:00:00Z",
+      "lockAtUtc": "2026-07-03T21:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "arg",
+        "footballDataTeamId": 762,
+        "name": "Argentina",
+        "shortName": "ARG",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537430",
+      "footballDataMatchId": 537430,
+      "stage": "Round of 32",
+      "apiStage": "LAST_32",
+      "matchday": null,
+      "kickoffUtc": "2026-07-04T01:30:00Z",
+      "lockAtUtc": "2026-07-04T01:15:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "home",
+        "footballDataTeamId": null,
+        "name": "Home TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537376",
+      "footballDataMatchId": 537376,
+      "stage": "Round of 16",
+      "apiStage": "LAST_16",
+      "matchday": null,
+      "kickoffUtc": "2026-07-04T17:00:00Z",
+      "lockAtUtc": "2026-07-04T16:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "home",
+        "footballDataTeamId": null,
+        "name": "Home TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537375",
+      "footballDataMatchId": 537375,
+      "stage": "Round of 16",
+      "apiStage": "LAST_16",
+      "matchday": null,
+      "kickoffUtc": "2026-07-04T21:00:00Z",
+      "lockAtUtc": "2026-07-04T20:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "home",
+        "footballDataTeamId": null,
+        "name": "Home TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537377",
+      "footballDataMatchId": 537377,
+      "stage": "Round of 16",
+      "apiStage": "LAST_16",
+      "matchday": null,
+      "kickoffUtc": "2026-07-05T20:00:00Z",
+      "lockAtUtc": "2026-07-05T19:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "home",
+        "footballDataTeamId": null,
+        "name": "Home TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537378",
+      "footballDataMatchId": 537378,
+      "stage": "Round of 16",
+      "apiStage": "LAST_16",
+      "matchday": null,
+      "kickoffUtc": "2026-07-06T00:00:00Z",
+      "lockAtUtc": "2026-07-05T23:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "home",
+        "footballDataTeamId": null,
+        "name": "Home TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537379",
+      "footballDataMatchId": 537379,
+      "stage": "Round of 16",
+      "apiStage": "LAST_16",
+      "matchday": null,
+      "kickoffUtc": "2026-07-06T19:00:00Z",
+      "lockAtUtc": "2026-07-06T18:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "home",
+        "footballDataTeamId": null,
+        "name": "Home TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537380",
+      "footballDataMatchId": 537380,
+      "stage": "Round of 16",
+      "apiStage": "LAST_16",
+      "matchday": null,
+      "kickoffUtc": "2026-07-07T00:00:00Z",
+      "lockAtUtc": "2026-07-06T23:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "home",
+        "footballDataTeamId": null,
+        "name": "Home TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537381",
+      "footballDataMatchId": 537381,
+      "stage": "Round of 16",
+      "apiStage": "LAST_16",
+      "matchday": null,
+      "kickoffUtc": "2026-07-07T16:00:00Z",
+      "lockAtUtc": "2026-07-07T15:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "home",
+        "footballDataTeamId": null,
+        "name": "Home TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537382",
+      "footballDataMatchId": 537382,
+      "stage": "Round of 16",
+      "apiStage": "LAST_16",
+      "matchday": null,
+      "kickoffUtc": "2026-07-07T20:00:00Z",
+      "lockAtUtc": "2026-07-07T19:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "home",
+        "footballDataTeamId": null,
+        "name": "Home TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537383",
+      "footballDataMatchId": 537383,
+      "stage": "Quarter-finals",
+      "apiStage": "QUARTER_FINALS",
+      "matchday": null,
+      "kickoffUtc": "2026-07-09T20:00:00Z",
+      "lockAtUtc": "2026-07-09T19:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "home",
+        "footballDataTeamId": null,
+        "name": "Home TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537384",
+      "footballDataMatchId": 537384,
+      "stage": "Quarter-finals",
+      "apiStage": "QUARTER_FINALS",
+      "matchday": null,
+      "kickoffUtc": "2026-07-10T19:00:00Z",
+      "lockAtUtc": "2026-07-10T18:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "home",
+        "footballDataTeamId": null,
+        "name": "Home TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537385",
+      "footballDataMatchId": 537385,
+      "stage": "Quarter-finals",
+      "apiStage": "QUARTER_FINALS",
+      "matchday": null,
+      "kickoffUtc": "2026-07-11T21:00:00Z",
+      "lockAtUtc": "2026-07-11T20:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "home",
+        "footballDataTeamId": null,
+        "name": "Home TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537386",
+      "footballDataMatchId": 537386,
+      "stage": "Quarter-finals",
+      "apiStage": "QUARTER_FINALS",
+      "matchday": null,
+      "kickoffUtc": "2026-07-12T01:00:00Z",
+      "lockAtUtc": "2026-07-12T00:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "home",
+        "footballDataTeamId": null,
+        "name": "Home TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537387",
+      "footballDataMatchId": 537387,
+      "stage": "Semi-finals",
+      "apiStage": "SEMI_FINALS",
+      "matchday": null,
+      "kickoffUtc": "2026-07-14T19:00:00Z",
+      "lockAtUtc": "2026-07-14T18:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "home",
+        "footballDataTeamId": null,
+        "name": "Home TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537388",
+      "footballDataMatchId": 537388,
+      "stage": "Semi-finals",
+      "apiStage": "SEMI_FINALS",
+      "matchday": null,
+      "kickoffUtc": "2026-07-15T19:00:00Z",
+      "lockAtUtc": "2026-07-15T18:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "home",
+        "footballDataTeamId": null,
+        "name": "Home TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537389",
+      "footballDataMatchId": 537389,
+      "stage": "Third place",
+      "apiStage": "THIRD_PLACE",
+      "matchday": null,
+      "kickoffUtc": "2026-07-18T21:00:00Z",
+      "lockAtUtc": "2026-07-18T20:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "home",
+        "footballDataTeamId": null,
+        "name": "Home TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "fd-537390",
+      "footballDataMatchId": 537390,
+      "stage": "Final",
+      "apiStage": "FINAL",
+      "matchday": null,
+      "kickoffUtc": "2026-07-19T19:00:00Z",
+      "lockAtUtc": "2026-07-19T18:45:00.000Z",
+      "locked": false,
+      "status": "TIMED",
+      "homeTeam": {
+        "id": "home",
+        "footballDataTeamId": null,
+        "name": "Home TBD",
+        "shortName": "TBD",
+        "flag": ""
+      },
+      "awayTeam": {
+        "id": "away",
+        "footballDataTeamId": null,
+        "name": "Away TBD",
+        "shortName": "TBD",
+        "flag": ""
       },
       "score": {
         "home": null,
