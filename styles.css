@@ -1,16 +1,17 @@
 :root {
-  color-scheme: light;
-  --ink: #10201d;
-  --muted: #66736f;
-  --line: rgba(16, 32, 29, 0.12);
-  --paper: #fbfaf5;
-  --panel: #ffffff;
-  --green: #0f6b52;
-  --green-dark: #0b3b33;
-  --gold: #d69f22;
-  --red: #bc4141;
-  --blue: #276a9f;
-  --shadow: 0 18px 50px rgba(11, 43, 38, 0.14);
+  color-scheme: dark;
+  --ink: #eef7f1;
+  --muted: #9fb2aa;
+  --line: rgba(224, 244, 235, 0.14);
+  --paper: #081411;
+  --panel: #101f1b;
+  --panel-strong: #162923;
+  --green: #39c48d;
+  --green-dark: #0d332b;
+  --gold: #f0b83f;
+  --red: #ff7575;
+  --blue: #65a7df;
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.38);
 }
 
 * {
@@ -23,8 +24,9 @@ body {
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: var(--ink);
   background:
-    radial-gradient(circle at 18% 0%, rgba(214, 159, 34, 0.14), transparent 30rem),
-    linear-gradient(135deg, #f7f1df 0%, #edf5ef 48%, #eef3f6 100%);
+    radial-gradient(circle at 18% 0%, rgba(240, 184, 63, 0.16), transparent 30rem),
+    radial-gradient(circle at 84% 10%, rgba(101, 167, 223, 0.14), transparent 28rem),
+    linear-gradient(135deg, #07110f 0%, #0e1d19 48%, #111925 100%);
 }
 
 button,
@@ -46,7 +48,7 @@ select {
 .ladder-card,
 .match-card {
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.78);
+  background: rgba(16, 31, 27, 0.82);
   box-shadow: var(--shadow);
   backdrop-filter: blur(18px);
 }
@@ -134,8 +136,8 @@ h1 {
   overflow: hidden;
   border-radius: 8px;
   background:
-    linear-gradient(110deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.58)),
-    linear-gradient(135deg, rgba(15, 107, 82, 0.2), rgba(39, 106, 159, 0.16));
+    linear-gradient(110deg, rgba(13, 29, 25, 0.94), rgba(14, 31, 42, 0.7)),
+    linear-gradient(135deg, rgba(57, 196, 141, 0.18), rgba(101, 167, 223, 0.18));
 }
 
 .hero h2 {
@@ -159,9 +161,9 @@ h1 {
   border: 3px solid rgba(255, 255, 255, 0.72);
   border-radius: 8px;
   background:
-    repeating-linear-gradient(90deg, rgba(15, 107, 82, 0.92) 0 52px, rgba(18, 124, 85, 0.92) 52px 104px),
-    #0f6b52;
-  box-shadow: inset 0 0 0 1px rgba(16, 32, 29, 0.18), 0 18px 40px rgba(11, 43, 38, 0.18);
+    repeating-linear-gradient(90deg, rgba(17, 92, 70, 0.95) 0 52px, rgba(20, 112, 80, 0.95) 52px 104px),
+    #115c46;
+  box-shadow: inset 0 0 0 1px rgba(224, 244, 235, 0.16), 0 18px 40px rgba(0, 0, 0, 0.28);
 }
 
 .pitch-line {
@@ -229,13 +231,13 @@ h1 {
 
 .tab {
   color: var(--muted);
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(18, 35, 30, 0.82);
   border: 1px solid var(--line);
 }
 
 .tab.active {
   color: white;
-  background: var(--green-dark);
+  background: #0a211c;
 }
 
 .button {
@@ -244,17 +246,17 @@ h1 {
 
 .button.primary {
   color: white;
-  background: var(--green);
+  background: #16885f;
 }
 
 .button.secondary {
   color: white;
-  background: var(--blue);
+  background: #2f6f9f;
 }
 
 .button.ghost {
-  color: var(--green-dark);
-  background: rgba(15, 107, 82, 0.1);
+  color: var(--green);
+  background: rgba(57, 196, 141, 0.13);
 }
 
 .status-strip {
@@ -322,8 +324,8 @@ h1 {
   flex: 0 0 auto;
   padding: 5px 8px;
   border-radius: 999px;
-  color: var(--green-dark);
-  background: rgba(15, 107, 82, 0.1);
+  color: var(--green);
+  background: rgba(57, 196, 141, 0.13);
 }
 
 .lock-badge.locked {
@@ -339,7 +341,7 @@ h1 {
   padding: 10px;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: #fff;
+  background: var(--panel-strong);
 }
 
 .team-name {
@@ -357,7 +359,7 @@ h1 {
   height: 34px;
   flex: 0 0 auto;
   border-radius: 50%;
-  background: #f2efe5;
+  background: rgba(238, 247, 241, 0.1);
   font-size: 1.25rem;
 }
 
@@ -374,15 +376,15 @@ h1 {
   padding: 9px 12px;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: #fff;
+  background: var(--panel-strong);
   color: var(--ink);
   font-weight: 800;
 }
 
 .tip-choice.selected {
-  border-color: rgba(15, 107, 82, 0.65);
-  background: rgba(15, 107, 82, 0.11);
-  color: var(--green-dark);
+  border-color: rgba(57, 196, 141, 0.7);
+  background: rgba(57, 196, 141, 0.16);
+  color: var(--green);
 }
 
 .tip-choice:disabled {
@@ -402,7 +404,7 @@ h1 {
   padding: 10px;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: #fff;
+  background: var(--panel-strong);
 }
 
 .pick-column h4 {
@@ -421,8 +423,8 @@ h1 {
   min-height: 28px;
   padding: 5px 9px;
   border-radius: 999px;
-  background: rgba(39, 106, 159, 0.1);
-  color: #17476d;
+  background: rgba(101, 167, 223, 0.16);
+  color: #b9ddff;
   font-size: 0.82rem;
   font-weight: 800;
 }
@@ -448,7 +450,7 @@ h1 {
 
 .ladder-head {
   color: var(--muted);
-  background: rgba(16, 32, 29, 0.05);
+  background: rgba(238, 247, 241, 0.06);
   font-size: 0.78rem;
   font-weight: 900;
   text-transform: uppercase;
@@ -456,7 +458,7 @@ h1 {
 
 .ladder-row {
   border-top: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(16, 31, 27, 0.7);
   font-weight: 800;
 }
 
@@ -489,14 +491,14 @@ select {
   border-radius: 8px;
   padding: 0 12px;
   color: var(--ink);
-  background: white;
+  background: var(--panel-strong);
   outline: none;
 }
 
 input:focus,
 select:focus {
   border-color: var(--green);
-  box-shadow: 0 0 0 3px rgba(15, 107, 82, 0.12);
+  box-shadow: 0 0 0 3px rgba(57, 196, 141, 0.16);
 }
 
 form .button {
@@ -513,8 +515,8 @@ form .button {
   padding: 12px 14px;
   border-radius: 8px;
   color: white;
-  background: var(--green-dark);
-  box-shadow: 0 18px 40px rgba(11, 43, 38, 0.24);
+  background: #0a211c;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.34);
   opacity: 0;
   pointer-events: none;
   transform: translateY(12px);
@@ -531,7 +533,7 @@ form .button {
   border: 1px dashed var(--line);
   border-radius: 8px;
   color: var(--muted);
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(16, 31, 27, 0.55);
   font-weight: 700;
 }
 
@@ -567,7 +569,7 @@ form .button {
     grid-template-columns: repeat(4, minmax(74px, 1fr));
     overflow-x: auto;
     padding: 8px 0;
-    background: rgba(247, 241, 223, 0.92);
+    background: rgba(8, 20, 17, 0.94);
     backdrop-filter: blur(16px);
   }
 
