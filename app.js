@@ -17,6 +17,23 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 
+const TEAM_FLAGS_BY_CODE = {
+  ARG: "🇦🇷",
+  AUS: "🇦🇺",
+  BIH: "🇧🇦",
+  BRA: "🇧🇷",
+  CAN: "🇨🇦",
+  CIV: "🇨🇮",
+  GER: "🇩🇪",
+  JPN: "🇯🇵",
+  MAR: "🇲🇦",
+  MEX: "🇲🇽",
+  NED: "🇳🇱",
+  RSA: "🇿🇦",
+  SUI: "🇨🇭",
+  USA: "🇺🇸"
+};
+
 const state = {
   fixtures: [],
   profiles: [],
@@ -360,10 +377,12 @@ function getNextLockoutText() {
 }
 
 function teamMarkup(team, score) {
+  const flag = team.flag || TEAM_FLAGS_BY_CODE[team.shortName] || "";
+
   return `
     <div class="team-row">
       <span class="team-name">
-        <span class="flag" aria-hidden="true">${escapeHtml(team.flag || "")}</span>
+        <span class="flag" aria-hidden="true">${escapeHtml(flag)}</span>
         <span>${escapeHtml(team.name)}</span>
       </span>
       <span class="team-score">${score ?? "-"}</span>
