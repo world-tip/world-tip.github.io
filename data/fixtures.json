@@ -5,14 +5,14 @@
     "stageStart": "Round of 32",
     "source": "https://www.football-data.org/"
   },
-  "updatedAtUtc": "2026-06-27T06:45:30.899Z",
+  "updatedAtUtc": "2026-06-27T07:08:57.622Z",
   "lockMinutesBeforeKickoff": 15,
   "api": {
     "competitionCode": "WC",
     "season": "2026",
     "endpoint": "https://api.football-data.org/v4/competitions/WC/matches?season=2026",
     "lastStatus": 200,
-    "lastCheckedAtUtc": "2026-06-27T06:45:30.894Z",
+    "lastCheckedAtUtc": "2026-06-27T07:08:57.616Z",
     "throttle": {
       "apiVersion": "v4",
       "authenticatedClient": "Liam",
@@ -36,14 +36,14 @@
         "footballDataTeamId": 774,
         "name": "South Africa",
         "shortName": "RSA",
-        "flag": ""
+        "flag": "🇿🇦"
       },
       "awayTeam": {
         "id": "can",
         "footballDataTeamId": 828,
         "name": "Canada",
         "shortName": "CAN",
-        "flag": ""
+        "flag": "🇨🇦"
       },
       "score": {
         "home": null,
@@ -66,14 +66,14 @@
         "footballDataTeamId": 764,
         "name": "Brazil",
         "shortName": "BRA",
-        "flag": ""
+        "flag": "🇧🇷"
       },
       "awayTeam": {
         "id": "jpn",
         "footballDataTeamId": 766,
         "name": "Japan",
         "shortName": "JPN",
-        "flag": ""
+        "flag": "🇯🇵"
       },
       "score": {
         "home": null,
@@ -96,7 +96,7 @@
         "footballDataTeamId": 759,
         "name": "Germany",
         "shortName": "GER",
-        "flag": ""
+        "flag": "🇩🇪"
       },
       "awayTeam": {
         "id": "away",
@@ -126,14 +126,14 @@
         "footballDataTeamId": 8601,
         "name": "Netherlands",
         "shortName": "NED",
-        "flag": ""
+        "flag": "🇳🇱"
       },
       "awayTeam": {
         "id": "mar",
         "footballDataTeamId": 815,
         "name": "Morocco",
         "shortName": "MAR",
-        "flag": ""
+        "flag": "🇲🇦"
       },
       "score": {
         "home": null,
@@ -156,7 +156,7 @@
         "footballDataTeamId": 1935,
         "name": "Ivory Coast",
         "shortName": "CIV",
-        "flag": ""
+        "flag": "🇨🇮"
       },
       "awayTeam": {
         "id": "away",
@@ -216,7 +216,7 @@
         "footballDataTeamId": 769,
         "name": "Mexico",
         "shortName": "MEX",
-        "flag": ""
+        "flag": "🇲🇽"
       },
       "awayTeam": {
         "id": "away",
@@ -306,14 +306,14 @@
         "footballDataTeamId": 771,
         "name": "United States",
         "shortName": "USA",
-        "flag": ""
+        "flag": "🇺🇸"
       },
       "awayTeam": {
         "id": "bih",
         "footballDataTeamId": 1060,
         "name": "Bosnia-Herzegovina",
         "shortName": "BIH",
-        "flag": ""
+        "flag": "🇧🇦"
       },
       "score": {
         "home": null,
@@ -396,7 +396,7 @@
         "footballDataTeamId": 788,
         "name": "Switzerland",
         "shortName": "SUI",
-        "flag": ""
+        "flag": "🇨🇭"
       },
       "awayTeam": {
         "id": "away",
@@ -426,7 +426,7 @@
         "footballDataTeamId": 779,
         "name": "Australia",
         "shortName": "AUS",
-        "flag": ""
+        "flag": "🇦🇺"
       },
       "awayTeam": {
         "id": "away",
@@ -456,7 +456,7 @@
         "footballDataTeamId": 762,
         "name": "Argentina",
         "shortName": "ARG",
-        "flag": ""
+        "flag": "🇦🇷"
       },
       "awayTeam": {
         "id": "away",
