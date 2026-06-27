@@ -1,6 +1,3 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { collection, doc, getDocs, getFirestore, setDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
-
 const FIXTURE_URL = "data/fixtures.json";
 const CURRENT_PROFILE_KEY = "worldCupTippingProfileId.v1";
 
@@ -14,8 +11,30 @@ const firebaseConfig = {
   measurementId: "G-NK1CXS6P9E"
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
-const db = getFirestore(firebaseApp);
+let firebaseApi = null;
+let db = null;
+const firebaseReady = initializeFirebase();
+
+async function initializeFirebase() {
+  const [{ initializeApp }, firestore] = await Promise.all([
+    import("https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js"),
+    import("https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js")
+  ]);
+
+  const firebaseApp = initializeApp(firebaseConfig);
+  db = firestore.getFirestore(firebaseApp);
+  firebaseApi = firestore;
+}
+
+async function ensureFirebase() {
+  await firebaseReady;
+
+  if (!firebaseApi || !db) {
+    throw new Error("Firebase did not initialize.");
+  }
+
+  return firebaseApi;
+}
 
 const TEAM_FLAGS_BY_CODE = {
   ARG: "🇦🇷",
@@ -60,6 +79,7 @@ const els = {
 
 const storageAdapter = {
   async load() {
+    const { collection, getDocs } = await ensureFirebase();
     const [profilesSnapshot, tipsSnapshot] = await Promise.all([
       getDocs(collection(db, "profiles")),
       getDocs(collection(db, "tips"))
@@ -79,6 +99,7 @@ const storageAdapter = {
   },
 
   async save(nextState) {
+    const { doc, setDoc } = await ensureFirebase();
     const profileWrites = nextState.profiles.map((profile) => setDoc(doc(db, "profiles", profile.id), {
       name: profile.name,
       pin: profile.pin,
@@ -99,19 +120,19 @@ init();
 
 async function init() {
   await loadFixtures();
+  state.draftTips = {};
+  bindEvents();
+  render();
 
   try {
     const saved = await storageAdapter.load();
     state.profiles = saved.profiles || [];
     state.tips = saved.tips || {};
+    render();
   } catch (error) {
     console.error(error);
     showToast("Could not load Firebase data. Check Firestore setup.");
   }
-
-  state.draftTips = {};
-  bindEvents();
-  render();
 }
 
 async function loadFixtures() {
@@ -160,7 +181,14 @@ function renderMatches() {
     return;
   }
 
-  els.matchesList.innerHTML = state.fixtures.map((match) => matchCardMarkup(match)).join("");
+  els.matchesList.innerHTML = state.fixtures.map((match) => {
+    try {
+      return matchCardMarkup(match);
+    } catch (error) {
+      console.error(error);
+      return emptyState(`Could not render ${escapeHtml(match.stage || "match")}.`);
+    }
+  }).join("");
 
   els.matchesList.querySelectorAll(".team-pick").forEach((button) => {
     button.addEventListener("click", () => stageTip(button.dataset.matchId, button.dataset.teamId));
