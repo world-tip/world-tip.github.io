@@ -45,10 +45,8 @@ const state = {
 const els = {
   tabs: document.querySelectorAll(".tab"),
   views: document.querySelectorAll(".view"),
-  tipsList: document.querySelector("#tipsList"),
   matchesList: document.querySelector("#matchesList"),
   ladderRows: document.querySelector("#ladderRows"),
-  saveTipsButton: document.querySelector("#saveTipsButton"),
   profileStatus: document.querySelector("#profileStatus"),
   currentProfileName: document.querySelector("#currentProfileName"),
   nextLockout: document.querySelector("#nextLockout"),
@@ -111,7 +109,7 @@ async function init() {
     showToast("Could not load Firebase data. Check Firestore setup.");
   }
 
-  state.draftTips = { ...(state.tips[state.currentProfileId] || {}) };
+  state.draftTips = {};
   bindEvents();
   render();
 }
@@ -132,7 +130,7 @@ function bindEvents() {
     tab.addEventListener("click", () => setView(tab.dataset.view));
   });
 
-  els.saveTipsButton.addEventListener("click", saveCurrentTips);
+  document.addEventListener("pointerdown", clearDraftOnOutsidePointerDown, true);
   els.switchProfileButton.addEventListener("click", () => setView("profile"));
   els.createProfileForm.addEventListener("submit", createProfile);
   els.loginProfileForm.addEventListener("submit", loginProfile);
@@ -145,7 +143,6 @@ function setView(viewName) {
 
 function render() {
   const profile = getCurrentProfile();
-  state.draftTips = { ...(state.tips[state.currentProfileId] || {}), ...state.draftTips };
 
   els.profileStatus.textContent = profile ? profile.name : "No profile";
   els.currentProfileName.textContent = profile ? profile.name : "Create or login";
@@ -153,49 +150,8 @@ function render() {
   els.nextLockout.textContent = getNextLockoutText();
 
   renderProfileSelect();
-  renderTips();
   renderMatches();
   renderLadder();
-}
-
-function renderTips() {
-  if (!state.fixtures.length) {
-    els.tipsList.innerHTML = emptyState("No fixtures loaded yet.");
-    return;
-  }
-
-  els.tipsList.innerHTML = state.fixtures.map((match) => {
-    const locked = isLocked(match);
-    const selected = state.draftTips[match.id] || "";
-    const status = locked ? "Locked" : `Locks ${formatTime(match.lockAtUtc)}`;
-    const disabled = locked || !getCurrentProfile() ? "disabled" : "";
-
-    return `
-      <article class="match-card">
-        <div class="match-meta">
-          <span>${escapeHtml(match.stage)} - ${formatDate(match.kickoffUtc)}</span>
-          <span class="lock-badge ${locked ? "locked" : ""}">${status}</span>
-        </div>
-        ${teamMarkup(match.homeTeam, match.score?.home)}
-        ${teamMarkup(match.awayTeam, match.score?.away)}
-        <div class="pick-columns" role="group" aria-label="Pick winner for ${escapeHtml(match.homeTeam.name)} versus ${escapeHtml(match.awayTeam.name)}">
-          <button class="tip-choice ${selected === match.homeTeam.id ? "selected" : ""}" data-match-id="${match.id}" data-team-id="${match.homeTeam.id}" ${disabled} type="button">
-            ${escapeHtml(match.homeTeam.shortName)}
-          </button>
-          <button class="tip-choice ${selected === match.awayTeam.id ? "selected" : ""}" data-match-id="${match.id}" data-team-id="${match.awayTeam.id}" ${disabled} type="button">
-            ${escapeHtml(match.awayTeam.shortName)}
-          </button>
-        </div>
-      </article>
-    `;
-  }).join("");
-
-  els.tipsList.querySelectorAll(".tip-choice").forEach((button) => {
-    button.addEventListener("click", () => {
-      state.draftTips[button.dataset.matchId] = button.dataset.teamId;
-      renderTips();
-    });
-  });
 }
 
 function renderMatches() {
@@ -204,28 +160,48 @@ function renderMatches() {
     return;
   }
 
-  els.matchesList.innerHTML = state.fixtures.map((match) => {
-    const locked = isLocked(match);
-    const homePickers = getPickers(match.id, match.homeTeam.id);
-    const awayPickers = getPickers(match.id, match.awayTeam.id);
+  els.matchesList.innerHTML = state.fixtures.map((match) => matchCardMarkup(match)).join("");
 
-    return `
-      <article class="match-card">
-        <div class="match-meta">
-          <span>${escapeHtml(match.stage)} - ${formatDate(match.kickoffUtc)}</span>
-          <span class="lock-badge ${locked ? "locked" : ""}">${locked ? "Picks visible" : `Hidden until ${formatTime(match.lockAtUtc)}`}</span>
-        </div>
-        ${teamMarkup(match.homeTeam, match.score?.home)}
-        ${teamMarkup(match.awayTeam, match.score?.away)}
-        ${locked ? `
-          <div class="pick-columns">
-            ${pickColumn(match.homeTeam.shortName, homePickers)}
-            ${pickColumn(match.awayTeam.shortName, awayPickers)}
+  els.matchesList.querySelectorAll(".team-pick").forEach((button) => {
+    button.addEventListener("click", () => stageTip(button.dataset.matchId, button.dataset.teamId));
+  });
+
+  els.matchesList.querySelectorAll(".confirm-tip").forEach((button) => {
+    button.addEventListener("click", () => confirmTip(button.dataset.matchId));
+  });
+}
+
+function matchCardMarkup(match) {
+  const locked = isLocked(match);
+  const homePickers = getPickers(match.id, match.homeTeam.id);
+  const awayPickers = getPickers(match.id, match.awayTeam.id);
+  const savedPick = state.tips[state.currentProfileId]?.[match.id] || "";
+  const stagedPick = state.draftTips[match.id] || "";
+  const confirmLabel = savedPick ? "Confirm change" : "Confirm tip";
+
+  return `
+    <article class="match-card" data-match-card="${match.id}">
+      <div class="match-meta">
+        <span>${escapeHtml(match.stage)} - ${formatDate(match.kickoffUtc)}</span>
+        <span class="lock-badge ${locked ? "locked" : ""}">${locked ? "Picks visible" : `Locks ${formatTime(match.lockAtUtc)}`}</span>
+      </div>
+      <div class="tip-action-area">
+        ${teamMarkup(match, match.homeTeam, match.score?.home, savedPick, stagedPick, locked)}
+        ${teamMarkup(match, match.awayTeam, match.score?.away, savedPick, stagedPick, locked)}
+        ${!locked && stagedPick ? `
+          <div class="confirm-row">
+            <button class="button primary confirm-tip" data-match-id="${match.id}" type="button">${confirmLabel}</button>
           </div>
-        ` : `<p class="hidden-picks">Picks are hidden until lockout.</p>`}
-      </article>
-    `;
-  }).join("");
+        ` : ""}
+      </div>
+      ${locked ? `
+        <div class="pick-columns">
+          ${pickColumn(match.homeTeam.shortName, homePickers)}
+          ${pickColumn(match.awayTeam.shortName, awayPickers)}
+        </div>
+      ` : `<p class="hidden-picks">Picks are hidden until lockout.</p>`}
+    </article>
+  `;
 }
 
 function renderLadder() {
@@ -284,7 +260,7 @@ async function createProfile(event) {
   await persist();
   event.target.reset();
   showToast(`Logged in as ${name}`);
-  setView("tips");
+  setView("matches");
   render();
 }
 
@@ -301,32 +277,70 @@ async function loginProfile(event) {
 
   state.currentProfileId = profile.id;
   localStorage.setItem(CURRENT_PROFILE_KEY, profile.id);
-  state.draftTips = { ...(state.tips[profile.id] || {}) };
+  state.draftTips = {};
   event.target.reset();
   showToast(`Logged in as ${profile.name}`);
-  setView("tips");
+  setView("matches");
   render();
 }
 
-async function saveCurrentTips() {
+function stageTip(matchId, teamId) {
   const profile = getCurrentProfile();
+  const match = state.fixtures.find((candidate) => candidate.id === matchId);
+
   if (!profile) {
     showToast("Create or login to a profile first.");
     setView("profile");
     return;
   }
 
-  const nextTips = { ...(state.tips[profile.id] || {}) };
-  state.fixtures.forEach((match) => {
-    if (!isLocked(match) && state.draftTips[match.id]) {
-      nextTips[match.id] = state.draftTips[match.id];
-    }
-  });
+  if (!match || isLocked(match)) {
+    return;
+  }
 
-  state.tips[profile.id] = nextTips;
+  const savedPick = state.tips[profile.id]?.[matchId] || "";
+
+  if (state.draftTips[matchId] === teamId || savedPick === teamId) {
+    state.draftTips = {};
+  } else {
+    state.draftTips = { [matchId]: teamId };
+  }
+
+  renderMatches();
+}
+
+async function confirmTip(matchId) {
+  const profile = getCurrentProfile();
+  const match = state.fixtures.find((candidate) => candidate.id === matchId);
+  const stagedPick = state.draftTips[matchId];
+
+  if (!profile) {
+    showToast("Create or login to a profile first.");
+    setView("profile");
+    return;
+  }
+
+  if (!match || isLocked(match) || !stagedPick) {
+    return;
+  }
+
+  state.tips[profile.id] = {
+    ...(state.tips[profile.id] || {}),
+    [matchId]: stagedPick
+  };
+  state.draftTips = {};
   await persist();
-  showToast("Tips saved.");
+  showToast("Tip confirmed.");
   render();
+}
+
+function clearDraftOnOutsidePointerDown(event) {
+  if (!Object.keys(state.draftTips).length || event.target.closest(".tip-action-area")) {
+    return;
+  }
+
+  state.draftTips = {};
+  renderMatches();
 }
 
 async function persist() {
@@ -376,18 +390,33 @@ function getNextLockoutText() {
   return next ? `${formatDate(next.lockAtUtc)} for ${next.homeTeam.shortName} v ${next.awayTeam.shortName}` : "All current matches locked";
 }
 
-function teamMarkup(team, score) {
+function teamMarkup(match, team, score, savedPick, stagedPick, locked) {
   const flag = team.flag || TEAM_FLAGS_BY_CODE[team.shortName] || "";
+  const unavailable = team.shortName === "TBD";
+  const disabled = locked || unavailable ? "disabled" : "";
+  const stateClass = getTeamPickClass(team.id, savedPick, stagedPick);
 
   return `
-    <div class="team-row">
+    <button class="team-row team-pick ${stateClass}" data-match-id="${match.id}" data-team-id="${team.id}" ${disabled} type="button">
       <span class="team-name">
         <span class="flag" aria-hidden="true">${escapeHtml(flag)}</span>
         <span>${escapeHtml(team.name)}</span>
       </span>
       <span class="team-score">${score ?? "-"}</span>
-    </div>
+    </button>
   `;
+}
+
+function getTeamPickClass(teamId, savedPick, stagedPick) {
+  if (stagedPick === teamId) {
+    return "pick-staged";
+  }
+
+  if (savedPick === teamId) {
+    return "pick-confirmed";
+  }
+
+  return "pick-default";
 }
 
 function pickColumn(title, pickers) {

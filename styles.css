@@ -215,7 +215,7 @@ h1 {
 
 .tabs {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
   margin: 18px 0 12px;
 }
@@ -334,6 +334,7 @@ h1 {
 }
 
 .team-row {
+  width: 100%;
   justify-content: space-between;
   gap: 12px;
   min-height: 54px;
@@ -342,6 +343,51 @@ h1 {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--panel-strong);
+  color: var(--ink);
+  text-align: left;
+  transition: background 150ms ease, border-color 150ms ease, color 150ms ease, opacity 150ms ease, transform 150ms ease;
+}
+
+.team-pick {
+  cursor: pointer;
+}
+
+.team-pick:hover:not(:disabled) {
+  border-color: rgba(101, 167, 223, 0.7);
+  background: rgba(101, 167, 223, 0.14);
+  transform: translateY(-1px);
+}
+
+.team-pick:disabled {
+  cursor: not-allowed;
+}
+
+.pick-default {
+  opacity: 0.68;
+}
+
+.pick-staged {
+  border-color: rgba(240, 184, 63, 0.82);
+  background: rgba(240, 184, 63, 0.18);
+  color: #ffe3a1;
+  opacity: 1;
+}
+
+.pick-confirmed {
+  border-color: rgba(57, 196, 141, 0.82);
+  background: rgba(57, 196, 141, 0.2);
+  color: #bff5dc;
+  opacity: 1;
+}
+
+.confirm-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.confirm-tip {
+  min-width: 160px;
 }
 
 .team-name {
@@ -566,7 +612,7 @@ form .button {
     position: sticky;
     top: 0;
     z-index: 10;
-    grid-template-columns: repeat(4, minmax(74px, 1fr));
+    grid-template-columns: repeat(3, minmax(74px, 1fr));
     overflow-x: auto;
     padding: 8px 0;
     background: rgba(8, 20, 17, 0.94);
