@@ -1,6 +1,21 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { collection, doc, getDocs, getFirestore, setDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
 const FIXTURE_URL = "data/fixtures.json";
-const STORAGE_KEY = "worldCupTippingState.v1";
 const CURRENT_PROFILE_KEY = "worldCupTippingProfileId.v1";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBVJkCwnVe80fqqCAsT4YsUG-JRIE-gG4I",
+  authDomain: "world-tip-4a2c3.firebaseapp.com",
+  projectId: "world-tip-4a2c3",
+  storageBucket: "world-tip-4a2c3.firebasestorage.app",
+  messagingSenderId: "862737079191",
+  appId: "1:862737079191:web:ce598ae571a5ca559ac2d2",
+  measurementId: "G-NK1CXS6P9E"
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getFirestore(firebaseApp);
 
 const state = {
   fixtures: [],
@@ -30,10 +45,38 @@ const els = {
 
 const storageAdapter = {
   async load() {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{"profiles":[],"tips":{}}');
+    const [profilesSnapshot, tipsSnapshot] = await Promise.all([
+      getDocs(collection(db, "profiles")),
+      getDocs(collection(db, "tips"))
+    ]);
+
+    const profiles = profilesSnapshot.docs
+      .map((profileDoc) => ({ id: profileDoc.id, ...profileDoc.data() }))
+      .sort((a, b) => a.name.localeCompare(b.name));
+
+    const tips = {};
+    tipsSnapshot.docs.forEach((tipsDoc) => {
+      const data = tipsDoc.data();
+      tips[tipsDoc.id] = data.picks || {};
+    });
+
+    return { profiles, tips };
   },
+
   async save(nextState) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
+    const profileWrites = nextState.profiles.map((profile) => setDoc(doc(db, "profiles", profile.id), {
+      name: profile.name,
+      pin: profile.pin,
+      createdAt: profile.createdAt
+    }, { merge: true }));
+
+    const tipWrites = Object.entries(nextState.tips).map(([profileId, picks]) => setDoc(doc(db, "tips", profileId), {
+      profileId,
+      picks,
+      updatedAt: new Date().toISOString()
+    }, { merge: true }));
+
+    await Promise.all([...profileWrites, ...tipWrites]);
   }
 };
 
@@ -41,9 +84,16 @@ init();
 
 async function init() {
   await loadFixtures();
-  const saved = await storageAdapter.load();
-  state.profiles = saved.profiles || [];
-  state.tips = saved.tips || {};
+
+  try {
+    const saved = await storageAdapter.load();
+    state.profiles = saved.profiles || [];
+    state.tips = saved.tips || {};
+  } catch (error) {
+    console.error(error);
+    showToast("Could not load Firebase data. Check Firestore setup.");
+  }
+
   state.draftTips = { ...(state.tips[state.currentProfileId] || {}) };
   bindEvents();
   render();
@@ -263,10 +313,16 @@ async function saveCurrentTips() {
 }
 
 async function persist() {
-  await storageAdapter.save({
-    profiles: state.profiles,
-    tips: state.tips
-  });
+  try {
+    await storageAdapter.save({
+      profiles: state.profiles,
+      tips: state.tips
+    });
+  } catch (error) {
+    console.error(error);
+    showToast("Could not save to Firebase. Check Firestore rules.");
+    throw error;
+  }
 }
 
 function getCurrentProfile() {
