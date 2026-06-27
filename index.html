@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b2b26">
+    <title>World Cup Tipping</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="site-header">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">32</span>
+          <div>
+            <p class="eyebrow">World Cup</p>
+            <h1>Knockout Tipping</h1>
+          </div>
+        </div>
+        <div class="profile-panel" id="profilePanel">
+          <span class="profile-status" id="profileStatus">No profile</span>
+          <button class="button ghost" id="switchProfileButton" type="button">Switch</button>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">Round of 32 to final</p>
+            <h2>Pick winners, lock before kickoff, settle the ladder.</h2>
+            <p>One point per correct winner. Picks lock 15 minutes before each match and become visible to everyone once locked.</p>
+          </div>
+          <div class="pitch-visual" aria-hidden="true">
+            <div class="pitch-line halfway"></div>
+            <div class="pitch-line center-circle"></div>
+            <div class="pitch-line box left"></div>
+            <div class="pitch-line box right"></div>
+            <div class="ball"></div>
+          </div>
+        </section>
+
+        <nav class="tabs" aria-label="Primary views">
+          <button class="tab active" data-view="tips" type="button">Tips</button>
+          <button class="tab" data-view="matches" type="button">Matches</button>
+          <button class="tab" data-view="ladder" type="button">Ladder</button>
+          <button class="tab" data-view="profile" type="button">Profile</button>
+        </nav>
+
+        <section class="status-strip">
+          <div>
+            <span class="label">Current profile</span>
+            <strong id="currentProfileName">Create or login</strong>
+          </div>
+          <div>
+            <span class="label">Next lockout</span>
+            <strong id="nextLockout">Loading</strong>
+          </div>
+          <div>
+            <span class="label">Matches loaded</span>
+            <strong id="matchCount">0</strong>
+          </div>
+        </section>
+
+        <section class="view active" id="tipsView">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Your tips</p>
+              <h3>Pick one winner per match</h3>
+            </div>
+            <button class="button primary" id="saveTipsButton" type="button">Save tips</button>
+          </div>
+          <div class="match-grid" id="tipsList"></div>
+        </section>
+
+        <section class="view" id="matchesView">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Everyone's picks</p>
+              <h3>Visible after each match locks</h3>
+            </div>
+          </div>
+          <div class="match-grid" id="matchesList"></div>
+        </section>
+
+        <section class="view" id="ladderView">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Ladder</p>
+              <h3>Correct winners only</h3>
+            </div>
+          </div>
+          <div class="ladder-card">
+            <div class="ladder-head">
+              <span>Rank</span>
+              <span>Player</span>
+              <span>Correct</span>
+              <span>Pending</span>
+            </div>
+            <div id="ladderRows"></div>
+          </div>
+        </section>
+
+        <section class="view" id="profileView">
+          <div class="profile-grid">
+            <form class="panel" id="createProfileForm">
+              <p class="eyebrow">New profile</p>
+              <h3>Create your player</h3>
+              <label>
+                Display name
+                <input id="newName" maxlength="24" autocomplete="nickname" placeholder="Sam" required>
+              </label>
+              <label>
+                4 digit PIN
+                <input id="newPin" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="1234" required>
+              </label>
+              <button class="button primary" type="submit">Create profile</button>
+            </form>
+
+            <form class="panel" id="loginProfileForm">
+              <p class="eyebrow">Existing profile</p>
+              <h3>Login to tip</h3>
+              <label>
+                Player
+                <select id="profileSelect"></select>
+              </label>
+              <label>
+                4 digit PIN
+                <input id="loginPin" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="1234" required>
+              </label>
+              <button class="button secondary" type="submit">Login</button>
+            </form>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>

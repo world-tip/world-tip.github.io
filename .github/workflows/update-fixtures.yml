@@ -1,0 +1,39 @@
+name: Update fixtures
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/5 * * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-fixtures
+  cancel-in-progress: false
+
+jobs:
+  update-fixtures:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Update fixture data
+        run: node scripts/update-fixtures.mjs
+        env:
+          FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
+          FOOTBALL_DATA_COMPETITION: WC
+          FOOTBALL_DATA_SEASON: "2026"
+          MIN_REQUESTS_AVAILABLE: "2"
+
+      - name: Commit updated fixtures
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update fixture data"
+          file_pattern: data/fixtures.json

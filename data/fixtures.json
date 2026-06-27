@@ -1,0 +1,129 @@
+{
+  "competition": {
+    "name": "FIFA World Cup",
+    "code": "WC",
+    "stageStart": "Round of 32",
+    "source": "https://www.football-data.org/"
+  },
+  "updatedAtUtc": "2026-06-27T00:00:00Z",
+  "lockMinutesBeforeKickoff": 15,
+  "api": {
+    "competitionCode": "WC",
+    "season": "2026",
+    "endpoint": "https://api.football-data.org/v4/competitions/WC/matches?season=2026",
+    "lastStatus": null,
+    "lastCheckedAtUtc": null,
+    "throttle": {
+      "apiVersion": null,
+      "authenticatedClient": null,
+      "requestCounterResetSeconds": null,
+      "requestsAvailable": null
+    }
+  },
+  "matches": [
+    {
+      "id": "wc26-r32-01",
+      "footballDataMatchId": null,
+      "stage": "Round of 32",
+      "kickoffUtc": "2026-07-04T19:00:00Z",
+      "lockAtUtc": "2026-07-04T18:45:00Z",
+      "locked": false,
+      "status": "SCHEDULED",
+      "homeTeam": {
+        "id": "arg",
+        "name": "Argentina",
+        "shortName": "ARG",
+        "flag": "🇦🇷"
+      },
+      "awayTeam": {
+        "id": "den",
+        "name": "Denmark",
+        "shortName": "DEN",
+        "flag": "🇩🇰"
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "wc26-r32-02",
+      "footballDataMatchId": null,
+      "stage": "Round of 32",
+      "kickoffUtc": "2026-07-05T02:00:00Z",
+      "lockAtUtc": "2026-07-05T01:45:00Z",
+      "locked": false,
+      "status": "SCHEDULED",
+      "homeTeam": {
+        "id": "bra",
+        "name": "Brazil",
+        "shortName": "BRA",
+        "flag": "🇧🇷"
+      },
+      "awayTeam": {
+        "id": "jpn",
+        "name": "Japan",
+        "shortName": "JPN",
+        "flag": "🇯🇵"
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "wc26-r32-03",
+      "footballDataMatchId": null,
+      "stage": "Round of 32",
+      "kickoffUtc": "2026-07-05T19:00:00Z",
+      "lockAtUtc": "2026-07-05T18:45:00Z",
+      "locked": false,
+      "status": "SCHEDULED",
+      "homeTeam": {
+        "id": "fra",
+        "name": "France",
+        "shortName": "FRA",
+        "flag": "🇫🇷"
+      },
+      "awayTeam": {
+        "id": "usa",
+        "name": "United States",
+        "shortName": "USA",
+        "flag": "🇺🇸"
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    },
+    {
+      "id": "wc26-r32-04",
+      "footballDataMatchId": null,
+      "stage": "Round of 32",
+      "kickoffUtc": "2026-07-06T02:00:00Z",
+      "lockAtUtc": "2026-07-06T01:45:00Z",
+      "locked": false,
+      "status": "SCHEDULED",
+      "homeTeam": {
+        "id": "eng",
+        "name": "England",
+        "shortName": "ENG",
+        "flag": "🏴"
+      },
+      "awayTeam": {
+        "id": "mar",
+        "name": "Morocco",
+        "shortName": "MAR",
+        "flag": "🇲🇦"
+      },
+      "score": {
+        "home": null,
+        "away": null
+      },
+      "winnerTeamId": null
+    }
+  ]
+}
