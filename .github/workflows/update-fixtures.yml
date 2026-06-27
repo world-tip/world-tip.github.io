@@ -3,8 +3,8 @@ name: Update fixtures
 on:
   workflow_dispatch:
   schedule:
-    # Offset from :00/:05/:10 because GitHub can delay or drop jobs at high-load boundaries.
-    - cron: "2-59/5 * * * *"
+    # Every 5 minutes, offset from :00/:05/:10 to avoid GitHub's busiest schedule boundary.
+    - cron: "2,7,12,17,22,27,32,37,42,47,52,57 * * * *"
 
 permissions:
   contents: write
