@@ -109,7 +109,8 @@ const storageAdapter = {
     const profileWrites = nextState.profiles.map((profile) => setDoc(doc(db, "profiles", profile.id), {
       name: profile.name,
       pin: profile.pin,
-      createdAt: profile.createdAt
+      createdAt: profile.createdAt,
+      startingPoints: startingPoints(profile)
     }, { merge: true }));
 
     const tipWrites = Object.entries(nextState.tips).map(([profileId, picks]) => setDoc(doc(db, "tips", profileId), {
@@ -380,17 +381,17 @@ function renderLadder() {
   const rows = state.profiles
     .map((profile) => ({
       profile,
-      correct: countCorrect(profile.id),
+      points: countPoints(profile.id),
       pending: countPending(profile.id)
     }))
-    .sort((a, b) => b.correct - a.correct || a.pending - b.pending || a.profile.name.localeCompare(b.profile.name));
+    .sort((a, b) => b.points - a.points || a.pending - b.pending || a.profile.name.localeCompare(b.profile.name));
 
   els.ladderRows.innerHTML = rows.length
     ? `${rows.map((row, index) => `
       <div class="ladder-row ${SHOW_LADDER_TIP_HISTORY ? "with-tip-history" : ""}">
         <span>${index + 1}</span>
         ${ladderPlayerCell(row.profile)}
-        <span>${row.correct}</span>
+        <span>${row.points}</span>
         <span>${row.pending}</span>
       </div>
     `).join("")}${ladderPointsGraph(rows.map((row) => row.profile))}`
@@ -464,7 +465,7 @@ function graphMatches() {
 }
 
 function pointsSeriesForProfile(profile, matches, index) {
-  let total = 0;
+  let total = startingPoints(profile);
   const values = matches.map((match) => {
     if (state.tips[profile.id]?.[match.id] === match.winnerTeamId) {
       total += 1;
@@ -559,7 +560,8 @@ async function createProfile(event) {
     id: crypto.randomUUID(),
     name,
     pin,
-    createdAt: new Date().toISOString()
+    createdAt: new Date().toISOString(),
+    startingPoints: lateJoinStartingPoints()
   };
 
   state.profiles.push(profile);
@@ -677,11 +679,30 @@ function getPickers(matchId, teamId) {
   return state.profiles.filter((profile) => state.tips[profile.id]?.[matchId] === teamId);
 }
 
+function countPoints(profileId) {
+  const profile = state.profiles.find((candidate) => candidate.id === profileId);
+  return startingPoints(profile) + countCorrect(profileId);
+}
+
 function countCorrect(profileId) {
   return state.fixtures.filter((match) => {
     const pick = state.tips[profileId]?.[match.id];
     return match.status === "FINISHED" && match.winnerTeamId && pick === match.winnerTeamId;
   }).length;
+}
+
+function lateJoinStartingPoints() {
+  if (state.profiles.length === 0) {
+    return 0;
+  }
+
+  const totalPoints = state.profiles.reduce((total, profile) => total + countPoints(profile.id), 0);
+  return Math.floor(totalPoints / state.profiles.length);
+}
+
+function startingPoints(profile) {
+  const value = Number(profile?.startingPoints || 0);
+  return Number.isFinite(value) ? value : 0;
 }
 
 function countPending(profileId) {
