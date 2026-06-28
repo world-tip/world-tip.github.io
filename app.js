@@ -1,5 +1,8 @@
 const FIXTURE_URL = "data/fixtures.json";
 const CURRENT_PROFILE_KEY = "worldCupTippingProfileId.v1";
+const SHOW_LADDER_TIP_HISTORY = true;
+const ENABLE_LADDER_TEST_MATCH = true;
+const SHOW_LADDER_POINTS_GRAPH = true;
 
 const firebaseConfig = {
   apiKey: "AIzaSyBVJkCwnVe80fqqCAsT4YsUG-JRIE-gG4I",
@@ -122,12 +125,14 @@ async function init() {
   await loadFixtures();
   state.draftTips = {};
   bindEvents();
+  applyLadderTestMatch();
   render();
 
   try {
     const saved = await storageAdapter.load();
     state.profiles = saved.profiles || [];
     state.tips = saved.tips || {};
+    applyLadderTestMatch();
     render();
   } catch (error) {
     console.error(error);
@@ -173,6 +178,83 @@ function render() {
   renderProfileSelect();
   renderMatches();
   renderLadder();
+}
+
+function applyLadderTestMatch() {
+  if (!ENABLE_LADDER_TEST_MATCH) {
+    return;
+  }
+
+  const testMatches = [
+    {
+      id: "local-test-ladder-match-1",
+      footballDataMatchId: null,
+      stage: "Test match 1",
+      kickoffUtc: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+      lockAtUtc: new Date(Date.now() - 135 * 60 * 1000).toISOString(),
+      locked: true,
+      status: "FINISHED",
+      homeTeam: {
+        id: "test-arg",
+        name: "Argentina",
+        shortName: "ARG",
+        flag: "🇦🇷"
+      },
+      awayTeam: {
+        id: "test-bra",
+        name: "Brazil",
+        shortName: "BRA",
+        flag: "🇧🇷"
+      },
+      score: {
+        home: 1,
+        away: 0
+      },
+      winnerTeamId: "test-arg"
+    },
+    {
+      id: "local-test-ladder-match-2",
+      footballDataMatchId: null,
+      stage: "Test match 2",
+      kickoffUtc: new Date(Date.now() - 60 * 60 * 1000).toISOString(),
+      lockAtUtc: new Date(Date.now() - 75 * 60 * 1000).toISOString(),
+      locked: true,
+      status: "FINISHED",
+      homeTeam: {
+        id: "test-jpn",
+        name: "Japan",
+        shortName: "JPN",
+        flag: "🇯🇵"
+      },
+      awayTeam: {
+        id: "test-usa",
+        name: "United States",
+        shortName: "USA",
+        flag: "🇺🇸"
+      },
+      score: {
+        home: 2,
+        away: 3
+      },
+      winnerTeamId: "test-usa"
+    }
+  ];
+
+  const testMatchIds = new Set(testMatches.map((match) => match.id));
+  state.fixtures = [...testMatches, ...state.fixtures.filter((match) => !testMatchIds.has(match.id))];
+
+  state.profiles.forEach((profile) => {
+    const existingTips = state.tips[profile.id] || {};
+    state.tips[profile.id] = {
+      ...existingTips,
+      ...Object.fromEntries(testMatches.map((match, index) => [match.id, testPickForProfile(profile.id, match, index)]))
+    };
+  });
+}
+
+function testPickForProfile(profileId, match, index) {
+  const hash = [...`${profileId}-${match.id}-${index}`].reduce((total, char) => total + char.charCodeAt(0), 0);
+  return hash % 2 === 0 ? match.homeTeam.id : match.awayTeam.id;
 }
 
 function renderMatches() {
@@ -242,15 +324,152 @@ function renderLadder() {
     .sort((a, b) => b.correct - a.correct || a.pending - b.pending || a.profile.name.localeCompare(b.profile.name));
 
   els.ladderRows.innerHTML = rows.length
-    ? rows.map((row, index) => `
-      <div class="ladder-row">
+    ? `${rows.map((row, index) => `
+      <div class="ladder-row ${SHOW_LADDER_TIP_HISTORY ? "with-tip-history" : ""}">
         <span>${index + 1}</span>
-        <span>${escapeHtml(row.profile.name)}</span>
+        ${ladderPlayerCell(row.profile)}
         <span>${row.correct}</span>
         <span>${row.pending}</span>
       </div>
-    `).join("")
+    `).join("")}${ladderPointsGraph(rows.map((row) => row.profile))}`
     : `<div class="empty-state">No profiles yet.</div>`;
+}
+
+function ladderPointsGraph(profiles) {
+  if (!SHOW_LADDER_POINTS_GRAPH || profiles.length === 0) {
+    return "";
+  }
+
+  const matches = graphMatches();
+  if (matches.length === 0) {
+    return `
+      <div class="points-graph">
+        <div class="points-graph-head">
+          <div>
+            <p class="eyebrow">History</p>
+            <h4>Points over time</h4>
+          </div>
+        </div>
+        <div class="points-graph-empty">No completed or locked matches with results yet.</div>
+      </div>
+    `;
+  }
+
+  const series = profiles.map((profile, index) => pointsSeriesForProfile(profile, matches, index));
+  const maxPoints = Math.max(1, ...series.flatMap((item) => item.values));
+  const width = 720;
+  const height = 260;
+  const pad = { top: 22, right: 26, bottom: 38, left: 36 };
+  const plotWidth = width - pad.left - pad.right;
+  const plotHeight = height - pad.top - pad.bottom;
+  const xFor = (index) => pad.left + (matches.length === 1 ? plotWidth : (plotWidth * index) / (matches.length - 1));
+  const yFor = (points) => pad.top + plotHeight - (plotHeight * points) / maxPoints;
+  const gridValues = graphGridValues(maxPoints);
+  const lines = series.map((item) => `
+    <polyline class="points-line" points="${item.values.map((points, index) => `${xFor(index).toFixed(1)},${yFor(points).toFixed(1)}`).join(" ")}" style="--series-color:${item.color}"></polyline>
+    ${item.values.map((points, index) => `<circle class="points-dot" cx="${xFor(index).toFixed(1)}" cy="${yFor(points).toFixed(1)}" r="3.5" style="--series-color:${item.color}"></circle>`).join("")}
+  `).join("");
+
+  return `
+    <div class="points-graph">
+      <div class="points-graph-head">
+        <div>
+          <p class="eyebrow">History</p>
+          <h4>Points over time</h4>
+        </div>
+      </div>
+      <div class="points-graph-frame">
+        <svg class="points-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="Points over time chart">
+          ${gridValues.map((value) => `
+            <line class="points-grid" x1="${pad.left}" x2="${width - pad.right}" y1="${yFor(value).toFixed(1)}" y2="${yFor(value).toFixed(1)}"></line>
+            <text class="points-axis-label" x="${pad.left - 10}" y="${(yFor(value) + 4).toFixed(1)}" text-anchor="end">${value}</text>
+          `).join("")}
+          ${matches.map((match, index) => `<text class="points-axis-label" x="${xFor(index).toFixed(1)}" y="${height - 10}" text-anchor="middle">${index + 1}</text>`).join("")}
+          ${lines}
+        </svg>
+      </div>
+      <div class="points-legend">
+        ${series.map((item) => `<span class="points-legend-item"><span class="points-legend-swatch" style="--series-color:${item.color}"></span>${escapeHtml(item.profile.name)}</span>`).join("")}
+      </div>
+    </div>
+  `;
+}
+
+function graphMatches() {
+  return state.fixtures
+    .filter((match) => match.status === "FINISHED" && match.winnerTeamId && hasPlayableTeams(match))
+    .sort((a, b) => new Date(a.kickoffUtc) - new Date(b.kickoffUtc));
+}
+
+function pointsSeriesForProfile(profile, matches, index) {
+  let total = 0;
+  const values = matches.map((match) => {
+    if (state.tips[profile.id]?.[match.id] === match.winnerTeamId) {
+      total += 1;
+    }
+    return total;
+  });
+
+  return {
+    profile,
+    values,
+    color: graphColor(index)
+  };
+}
+
+function graphGridValues(maxPoints) {
+  const middle = Math.ceil(maxPoints / 2);
+  return [...new Set([0, middle, maxPoints])].sort((a, b) => a - b);
+}
+
+function graphColor(index) {
+  const colors = ["#39c48d", "#65a7df", "#f0b83f", "#ff8f70", "#c79cff", "#6ee7e7", "#ff75a0", "#a7e36d"];
+  return colors[index % colors.length];
+}
+
+function ladderPlayerCell(profile) {
+  if (!SHOW_LADDER_TIP_HISTORY) {
+    return `<span>${escapeHtml(profile.name)}</span>`;
+  }
+
+  const history = ladderTipHistory(profile.id);
+  return `
+    <span class="ladder-player-cell">
+      <span class="ladder-player-name">${escapeHtml(profile.name)}</span>
+      ${history.length ? `<span class="tip-history-strip" aria-label="Locked historical tips">${history.join("")}</span>` : ""}
+    </span>
+  `;
+}
+
+function ladderTipHistory(profileId) {
+  return state.fixtures
+    .filter((match) => isLocked(match) && hasPlayableTeams(match))
+    .map((match) => ladderTipIndicator(match, state.tips[profileId]?.[match.id]))
+    .filter(Boolean);
+}
+
+function hasPlayableTeams(match) {
+  return match.homeTeam?.shortName !== "TBD" && match.awayTeam?.shortName !== "TBD";
+}
+
+function ladderTipIndicator(match, pickedTeamId) {
+  if (!pickedTeamId) {
+    return "";
+  }
+
+  const homePicked = pickedTeamId === match.homeTeam.id;
+  const awayPicked = pickedTeamId === match.awayTeam.id;
+
+  if (!homePicked && !awayPicked) {
+    return "";
+  }
+
+  return `
+    <span class="tip-orb" title="${escapeHtml(match.homeTeam.shortName)} v ${escapeHtml(match.awayTeam.shortName)}">
+      <span class="tip-orb-half home ${homePicked ? "picked" : ""}">${escapeHtml(teamFlag(match.homeTeam))}</span>
+      <span class="tip-orb-half away ${awayPicked ? "picked" : ""}">${escapeHtml(teamFlag(match.awayTeam))}</span>
+    </span>
+  `;
 }
 
 function renderProfileSelect() {
@@ -419,7 +638,7 @@ function getNextLockoutText() {
 }
 
 function teamMarkup(match, team, score, savedPick, stagedPick, locked) {
-  const flag = team.flag || TEAM_FLAGS_BY_CODE[team.shortName] || "";
+  const flag = teamFlag(team);
   const unavailable = team.shortName === "TBD";
   const disabled = locked || unavailable ? "disabled" : "";
   const stateClass = getTeamPickClass(team.id, savedPick, stagedPick);
@@ -433,6 +652,10 @@ function teamMarkup(match, team, score, savedPick, stagedPick, locked) {
       <span class="team-score">${score ?? "-"}</span>
     </button>
   `;
+}
+
+function teamFlag(team) {
+  return team?.flag || TEAM_FLAGS_BY_CODE[team?.shortName] || "";
 }
 
 function getTeamPickClass(teamId, savedPick, stagedPick) {

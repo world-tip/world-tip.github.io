@@ -508,6 +508,161 @@ h1 {
   font-weight: 800;
 }
 
+.ladder-player-cell {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.ladder-player-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tip-history-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 42px;
+  align-items: center;
+}
+
+.tip-orb {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 62px;
+  height: 38px;
+  overflow: hidden;
+  border: 1px solid rgba(224, 244, 235, 0.24);
+  border-radius: 999px;
+  background: rgba(238, 247, 241, 0.07);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.26);
+}
+
+.tip-orb-half {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  color: rgba(238, 247, 241, 0.72);
+  background: rgba(238, 247, 241, 0.07);
+  font-size: 1.15rem;
+  line-height: 1;
+  opacity: 0.42;
+  filter: grayscale(0.9) saturate(0.7);
+  transform: scale(0.92);
+}
+
+.tip-orb-half.home {
+  border-right: 1px solid rgba(224, 244, 235, 0.16);
+}
+
+.tip-orb-half.picked {
+  color: #fff7d2;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(240, 184, 63, 0.5), rgba(57, 196, 141, 0.2)),
+    rgba(57, 196, 141, 0.32);
+  opacity: 1;
+  filter: none;
+  transform: scale(1.08);
+  box-shadow: inset 0 0 0 2px rgba(240, 184, 63, 0.62), 0 0 18px rgba(57, 196, 141, 0.18);
+}
+
+.points-graph {
+  padding: 18px 16px 16px;
+  border-top: 1px solid var(--line);
+  background: rgba(8, 20, 17, 0.28);
+}
+
+.points-graph-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.points-graph-head h4 {
+  margin: 2px 0 0;
+  font-size: 1rem;
+}
+
+.points-graph-frame {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(238, 247, 241, 0.045), rgba(238, 247, 241, 0.015)),
+    rgba(16, 31, 27, 0.64);
+}
+
+.points-chart {
+  display: block;
+  width: 100%;
+  min-width: 520px;
+  height: auto;
+}
+
+.points-grid {
+  stroke: rgba(224, 244, 235, 0.12);
+  stroke-width: 1;
+}
+
+.points-axis-label {
+  fill: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.points-line {
+  fill: none;
+  stroke: var(--series-color);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.28));
+}
+
+.points-dot {
+  fill: var(--series-color);
+  stroke: #07110f;
+  stroke-width: 2;
+}
+
+.points-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin-top: 12px;
+}
+
+.points-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 26px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.points-legend-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--series-color);
+  box-shadow: 0 0 0 3px rgba(238, 247, 241, 0.06);
+}
+
+.points-graph-empty {
+  padding: 14px;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  color: var(--muted);
+  background: rgba(16, 31, 27, 0.5);
+  font-weight: 700;
+}
+
 .profile-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
