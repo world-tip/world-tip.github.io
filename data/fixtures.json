@@ -5,14 +5,14 @@
     "stageStart": "Round of 32",
     "source": "https://www.football-data.org/"
   },
-  "updatedAtUtc": "2026-06-28T15:07:01.510Z",
+  "updatedAtUtc": "2026-06-28T19:58:21.070Z",
   "lockMinutesBeforeKickoff": 15,
   "api": {
     "competitionCode": "WC",
     "season": "2026",
     "endpoint": "https://api.football-data.org/v4/competitions/WC/matches?season=2026",
     "lastStatus": 200,
-    "lastCheckedAtUtc": "2026-06-28T15:07:01.502Z",
+    "lastCheckedAtUtc": "2026-06-28T19:58:21.063Z",
     "throttle": {
       "apiVersion": "v4",
       "authenticatedClient": "Liam",
@@ -29,8 +29,8 @@
       "matchday": null,
       "kickoffUtc": "2026-06-28T19:00:00Z",
       "lockAtUtc": "2026-06-28T18:45:00.000Z",
-      "locked": false,
-      "status": "TIMED",
+      "locked": true,
+      "status": "PAUSED",
       "homeTeam": {
         "id": "rsa",
         "footballDataTeamId": 774,
@@ -46,8 +46,8 @@
         "flag": "🇨🇦"
       },
       "score": {
-        "home": null,
-        "away": null
+        "home": 0,
+        "away": 0
       },
       "winnerTeamId": null
     },
