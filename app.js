@@ -3,6 +3,7 @@ const CURRENT_PROFILE_KEY = "worldCupTippingProfileId.v1";
 const SHOW_LADDER_TIP_HISTORY = true;
 const ENABLE_LADDER_TEST_MATCH = false;
 const SHOW_LADDER_POINTS_GRAPH = true;
+const GROUP_MATCHES_BY_STAGE = true;
 
 const firebaseConfig = {
   apiKey: "AIzaSyBVJkCwnVe80fqqCAsT4YsUG-JRIE-gG4I",
@@ -61,12 +62,14 @@ const state = {
   profiles: [],
   tips: {},
   currentProfileId: localStorage.getItem(CURRENT_PROFILE_KEY) || "",
-  draftTips: {}
+  draftTips: {},
+  selectedStage: ""
 };
 
 const els = {
   tabs: document.querySelectorAll(".tab"),
   views: document.querySelectorAll(".view"),
+  stageTabs: document.querySelector("#stageTabs"),
   matchesList: document.querySelector("#matchesList"),
   ladderRows: document.querySelector("#ladderRows"),
   profileStatus: document.querySelector("#profileStatus"),
@@ -176,6 +179,7 @@ function render() {
   els.nextLockout.textContent = getNextLockoutText();
 
   renderProfileSelect();
+  renderStageTabs();
   renderMatches();
   renderLadder();
 }
@@ -257,13 +261,53 @@ function testPickForProfile(profileId, match, index) {
   return hash % 2 === 0 ? match.homeTeam.id : match.awayTeam.id;
 }
 
+function renderStageTabs() {
+  if (!els.stageTabs) {
+    return;
+  }
+
+  if (!GROUP_MATCHES_BY_STAGE || !state.fixtures.length) {
+    els.stageTabs.innerHTML = "";
+    els.stageTabs.hidden = true;
+    return;
+  }
+
+  const stages = matchStages();
+  if (!state.selectedStage || !stages.includes(state.selectedStage)) {
+    state.selectedStage = stages[0] || "";
+  }
+
+  els.stageTabs.hidden = false;
+  els.stageTabs.innerHTML = stages.map((stage) => `
+    <button class="stage-tab ${stage === state.selectedStage ? "active" : ""}" data-stage="${escapeHtml(stage)}" type="button">
+      ${escapeHtml(stage)}
+    </button>
+  `).join("");
+
+  els.stageTabs.querySelectorAll(".stage-tab").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.selectedStage = button.dataset.stage;
+      state.draftTips = {};
+      renderStageTabs();
+      renderMatches();
+    });
+  });
+}
+
 function renderMatches() {
+  const matches = visibleMatches();
+
   if (!state.fixtures.length) {
     els.matchesList.innerHTML = emptyState("No fixtures loaded yet.");
     return;
   }
 
-  els.matchesList.innerHTML = state.fixtures.map((match) => {
+  if (!matches.length) {
+    els.matchesList.innerHTML = emptyState("No matches in this round yet.");
+    return;
+  }
+
+  els.matchesList.innerHTML = matches.map((match) => {
     try {
       return matchCardMarkup(match);
     } catch (error) {
@@ -279,6 +323,24 @@ function renderMatches() {
   els.matchesList.querySelectorAll(".confirm-tip").forEach((button) => {
     button.addEventListener("click", () => confirmTip(button.dataset.matchId));
   });
+}
+
+function visibleMatches() {
+  if (!GROUP_MATCHES_BY_STAGE || !state.selectedStage) {
+    return state.fixtures;
+  }
+
+  return state.fixtures.filter((match) => match.stage === state.selectedStage);
+}
+
+function matchStages() {
+  const stages = [];
+  state.fixtures.forEach((match) => {
+    if (match.stage && !stages.includes(match.stage)) {
+      stages.push(match.stage);
+    }
+  });
+  return stages;
 }
 
 function matchCardMarkup(match) {
