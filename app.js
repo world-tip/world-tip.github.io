@@ -1,7 +1,7 @@
 const FIXTURE_URL = "data/fixtures.json";
 const CURRENT_PROFILE_KEY = "worldCupTippingProfileId.v1";
 const SHOW_LADDER_TIP_HISTORY = true;
-const ENABLE_LADDER_TEST_MATCH = true;
+const ENABLE_LADDER_TEST_MATCH = false;
 const SHOW_LADDER_POINTS_GRAPH = true;
 
 const firebaseConfig = {
