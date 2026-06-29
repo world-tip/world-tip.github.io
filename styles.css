@@ -578,6 +578,12 @@ h1 {
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.26);
 }
 
+.tip-orb.no-tip {
+  border-color: rgba(224, 244, 235, 0.16);
+  background: rgba(238, 247, 241, 0.04);
+  box-shadow: none;
+}
+
 .tip-orb-half {
   display: grid;
   place-items: center;

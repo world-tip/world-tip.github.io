@@ -516,19 +516,19 @@ function hasPlayableTeams(match) {
 }
 
 function ladderTipIndicator(match, pickedTeamId) {
-  if (!pickedTeamId) {
-    return "";
-  }
-
   const homePicked = pickedTeamId === match.homeTeam.id;
   const awayPicked = pickedTeamId === match.awayTeam.id;
 
-  if (!homePicked && !awayPicked) {
+  if (pickedTeamId && !homePicked && !awayPicked) {
     return "";
   }
 
+  const tipTitle = pickedTeamId
+    ? `${match.homeTeam.shortName} v ${match.awayTeam.shortName}`
+    : `No tip: ${match.homeTeam.shortName} v ${match.awayTeam.shortName}`;
+
   return `
-    <span class="tip-orb" title="${escapeHtml(match.homeTeam.shortName)} v ${escapeHtml(match.awayTeam.shortName)}">
+    <span class="tip-orb ${pickedTeamId ? "" : "no-tip"}" title="${escapeHtml(tipTitle)}" aria-label="${escapeHtml(tipTitle)}">
       <span class="tip-orb-half home ${homePicked ? "picked" : ""}">${escapeHtml(teamFlag(match.homeTeam))}</span>
       <span class="tip-orb-half away ${awayPicked ? "picked" : ""}">${escapeHtml(teamFlag(match.awayTeam))}</span>
     </span>
