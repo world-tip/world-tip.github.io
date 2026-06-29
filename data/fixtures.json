@@ -5,14 +5,14 @@
     "stageStart": "Round of 32",
     "source": "https://www.football-data.org/"
   },
-  "updatedAtUtc": "2026-06-28T23:48:22.765Z",
+  "updatedAtUtc": "2026-06-29T11:41:04.603Z",
   "lockMinutesBeforeKickoff": 15,
   "api": {
     "competitionCode": "WC",
     "season": "2026",
     "endpoint": "https://api.football-data.org/v4/competitions/WC/matches?season=2026",
     "lastStatus": 200,
-    "lastCheckedAtUtc": "2026-06-28T23:48:22.760Z",
+    "lastCheckedAtUtc": "2026-06-29T11:41:04.598Z",
     "throttle": {
       "apiVersion": "v4",
       "authenticatedClient": "Liam",
@@ -513,10 +513,10 @@
       "status": "TIMED",
       "homeTeam": {
         "id": "home",
-        "footballDataTeamId": null,
-        "name": "Home TBD",
-        "shortName": "TBD",
-        "flag": ""
+        "footballDataTeamId": 828,
+        "name": "Canada",
+        "shortName": "CAN",
+        "flag": "🇨🇦"
       },
       "awayTeam": {
         "id": "away",
