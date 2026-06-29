@@ -5,14 +5,14 @@
     "stageStart": "Round of 32",
     "source": "https://www.football-data.org/"
   },
-  "updatedAtUtc": "2026-06-29T14:39:59.846Z",
+  "updatedAtUtc": "2026-06-29T20:59:31.008Z",
   "lockMinutesBeforeKickoff": 15,
   "api": {
     "competitionCode": "WC",
     "season": "2026",
     "endpoint": "https://api.football-data.org/v4/competitions/WC/matches?season=2026",
     "lastStatus": 200,
-    "lastCheckedAtUtc": "2026-06-29T14:39:59.843Z",
+    "lastCheckedAtUtc": "2026-06-29T20:59:31.003Z",
     "throttle": {
       "apiVersion": "v4",
       "authenticatedClient": "Liam",
@@ -59,8 +59,8 @@
       "matchday": null,
       "kickoffUtc": "2026-06-29T17:00:00Z",
       "lockAtUtc": "2026-06-29T16:45:00.000Z",
-      "locked": false,
-      "status": "TIMED",
+      "locked": true,
+      "status": "FINISHED",
       "homeTeam": {
         "id": "bra",
         "footballDataTeamId": 764,
@@ -76,10 +76,10 @@
         "flag": "🇯🇵"
       },
       "score": {
-        "home": null,
-        "away": null
+        "home": 2,
+        "away": 1
       },
-      "winnerTeamId": null
+      "winnerTeamId": "bra"
     },
     {
       "id": "fd-537415",
@@ -89,8 +89,8 @@
       "matchday": null,
       "kickoffUtc": "2026-06-29T20:30:00Z",
       "lockAtUtc": "2026-06-29T20:15:00.000Z",
-      "locked": false,
-      "status": "TIMED",
+      "locked": true,
+      "status": "IN_PLAY",
       "homeTeam": {
         "id": "ger",
         "footballDataTeamId": 759,
@@ -106,8 +106,8 @@
         "flag": "🇵🇾"
       },
       "score": {
-        "home": null,
-        "away": null
+        "home": 0,
+        "away": 0
       },
       "winnerTeamId": null
     },
