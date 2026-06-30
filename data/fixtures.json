@@ -5,14 +5,14 @@
     "stageStart": "Round of 32",
     "source": "https://www.football-data.org/"
   },
-  "updatedAtUtc": "2026-06-29T23:12:50.355Z",
+  "updatedAtUtc": "2026-06-30T06:52:43.947Z",
   "lockMinutesBeforeKickoff": 15,
   "api": {
     "competitionCode": "WC",
     "season": "2026",
     "endpoint": "https://api.football-data.org/v4/competitions/WC/matches?season=2026",
     "lastStatus": 200,
-    "lastCheckedAtUtc": "2026-06-29T23:12:50.348Z",
+    "lastCheckedAtUtc": "2026-06-30T06:52:43.940Z",
     "throttle": {
       "apiVersion": "v4",
       "authenticatedClient": "Liam",
@@ -90,7 +90,7 @@
       "kickoffUtc": "2026-06-29T20:30:00Z",
       "lockAtUtc": "2026-06-29T20:15:00.000Z",
       "locked": true,
-      "status": "PAUSED",
+      "status": "FINISHED",
       "homeTeam": {
         "id": "ger",
         "footballDataTeamId": 759,
@@ -106,10 +106,10 @@
         "flag": "🇵🇾"
       },
       "score": {
-        "home": 2,
-        "away": 1
+        "home": 4,
+        "away": 5
       },
-      "winnerTeamId": null
+      "winnerTeamId": "away"
     },
     {
       "id": "fd-537418",
@@ -119,8 +119,8 @@
       "matchday": null,
       "kickoffUtc": "2026-06-30T01:00:00Z",
       "lockAtUtc": "2026-06-30T00:45:00.000Z",
-      "locked": false,
-      "status": "TIMED",
+      "locked": true,
+      "status": "FINISHED",
       "homeTeam": {
         "id": "ned",
         "footballDataTeamId": 8601,
@@ -136,10 +136,10 @@
         "flag": "🇲🇦"
       },
       "score": {
-        "home": null,
-        "away": null
+        "home": 3,
+        "away": 4
       },
-      "winnerTeamId": null
+      "winnerTeamId": "mar"
     },
     {
       "id": "fd-537424",
@@ -520,10 +520,10 @@
       },
       "awayTeam": {
         "id": "away",
-        "footballDataTeamId": null,
-        "name": "Away TBD",
-        "shortName": "TBD",
-        "flag": ""
+        "footballDataTeamId": 815,
+        "name": "Morocco",
+        "shortName": "MAR",
+        "flag": "🇲🇦"
       },
       "score": {
         "home": null,
@@ -543,10 +543,10 @@
       "status": "TIMED",
       "homeTeam": {
         "id": "home",
-        "footballDataTeamId": null,
-        "name": "Home TBD",
-        "shortName": "TBD",
-        "flag": ""
+        "footballDataTeamId": 761,
+        "name": "Paraguay",
+        "shortName": "PAR",
+        "flag": "🇵🇾"
       },
       "awayTeam": {
         "id": "away",
@@ -573,10 +573,10 @@
       "status": "TIMED",
       "homeTeam": {
         "id": "home",
-        "footballDataTeamId": null,
-        "name": "Home TBD",
-        "shortName": "TBD",
-        "flag": ""
+        "footballDataTeamId": 764,
+        "name": "Brazil",
+        "shortName": "BRA",
+        "flag": "🇧🇷"
       },
       "awayTeam": {
         "id": "away",
