@@ -5,14 +5,14 @@
     "stageStart": "Round of 32",
     "source": "https://www.football-data.org/"
   },
-  "updatedAtUtc": "2026-06-30T23:03:15.877Z",
+  "updatedAtUtc": "2026-07-01T07:35:25.601Z",
   "lockMinutesBeforeKickoff": 15,
   "api": {
     "competitionCode": "WC",
     "season": "2026",
     "endpoint": "https://api.football-data.org/v4/competitions/WC/matches?season=2026",
     "lastStatus": 200,
-    "lastCheckedAtUtc": "2026-06-30T23:03:15.871Z",
+    "lastCheckedAtUtc": "2026-07-01T07:35:25.596Z",
     "throttle": {
       "apiVersion": "v4",
       "authenticatedClient": "Liam",
@@ -209,8 +209,8 @@
       "matchday": null,
       "kickoffUtc": "2026-07-01T01:00:00Z",
       "lockAtUtc": "2026-07-01T00:45:00.000Z",
-      "locked": false,
-      "status": "TIMED",
+      "locked": true,
+      "status": "FINISHED",
       "homeTeam": {
         "id": "mex",
         "footballDataTeamId": 769,
@@ -226,10 +226,10 @@
         "flag": "🇪🇨"
       },
       "score": {
-        "home": null,
-        "away": null
+        "home": 2,
+        "away": 0
       },
-      "winnerTeamId": null
+      "winnerTeamId": "mex"
     },
     {
       "id": "fd-537426",
@@ -550,10 +550,10 @@
       },
       "awayTeam": {
         "id": "away",
-        "footballDataTeamId": null,
-        "name": "Away TBD",
-        "shortName": "TBD",
-        "flag": ""
+        "footballDataTeamId": 773,
+        "name": "France",
+        "shortName": "FRA",
+        "flag": "🇫🇷"
       },
       "score": {
         "home": null,
@@ -580,10 +580,10 @@
       },
       "awayTeam": {
         "id": "away",
-        "footballDataTeamId": null,
-        "name": "Away TBD",
-        "shortName": "TBD",
-        "flag": ""
+        "footballDataTeamId": 8872,
+        "name": "Norway",
+        "shortName": "NOR",
+        "flag": "🇳🇴"
       },
       "score": {
         "home": null,
