@@ -529,12 +529,14 @@ h1 {
   display: grid;
   grid-template-columns: 52px minmax(7ch, var(--player-column-width, 12ch)) 64px;
   gap: 10px;
-  min-height: 67px;
-  padding: 14px 16px;
+  height: var(--ladder-row-height, 67px);
+  padding: 0 16px;
 }
 
 .ladder-head {
-  min-height: 42px;
+  height: var(--ladder-head-height, 42px);
+  align-items: center;
+  text-align: center;
   color: var(--muted);
   background: rgba(238, 247, 241, 0.06);
   font-size: 0.78rem;
@@ -556,6 +558,7 @@ h1 {
 }
 
 .ladder-row {
+  align-items: center;
   border-top: 1px solid var(--line);
   background: rgba(16, 31, 27, 0.7);
   font-weight: 800;
@@ -597,7 +600,7 @@ h1 {
 }
 
 .ladder-history-head {
-  min-height: 42px;
+  height: var(--ladder-head-height, 42px);
   align-items: center;
   color: var(--muted);
   background: rgba(238, 247, 241, 0.06);
@@ -607,7 +610,7 @@ h1 {
 }
 
 .ladder-history-row {
-  min-height: 67px;
+  height: var(--ladder-row-height, 67px);
   align-items: center;
   border-top: 1px solid var(--line);
   background: rgba(16, 31, 27, 0.5);
@@ -950,8 +953,8 @@ form .button {
 .ladder-row {
   grid-template-columns: 34px minmax(7ch, var(--player-column-width, 12ch)) 48px;
   gap: 8px;
-  min-height: 63px;
-  padding: 12px 10px;
+  height: var(--ladder-row-height, 63px);
+  padding: 0 10px;
 }
 
 .ladder-table {
@@ -961,12 +964,13 @@ form .button {
 .ladder-history-head,
 .ladder-history-row {
   grid-template-columns: repeat(var(--history-columns), 64px);
-  min-height: 63px;
+  height: var(--ladder-row-height, 63px);
   padding: 0 10px;
 }
 
+.ladder-head,
 .ladder-history-head {
-  min-height: 42px;
+  height: var(--ladder-head-height, 42px);
 }
 }
 

@@ -478,12 +478,12 @@ function renderLadder() {
   const playerColumnStyle = ladderPlayerColumnStyle(profiles);
   els.ladderRows.innerHTML = `
     <div class="ladder-table ${SHOW_LADDER_TIP_HISTORY ? "with-tip-history" : ""}" style="${playerColumnStyle}">
-      <div class="ladder-fixed">
-        <div class="ladder-head">
-        <span>Rank</span>
-        <span>Player</span>
-        <span>Points</span>
-      </div>
+<div class="ladder-fixed">
+  <div class="ladder-head">
+    <span>Rank</span>
+    <span>Player</span>
+    <span>Points</span>
+  </div>
         ${rows.map((row, index) => `
           <div class="ladder-row" data-profile-id="${escapeHtml(row.profile.id)}">
             <span>${index + 1}</span>
