@@ -63,7 +63,9 @@ const state = {
   tips: {},
   currentProfileId: localStorage.getItem(CURRENT_PROFILE_KEY) || "",
   draftTips: {},
-  selectedStage: ""
+  selectedStage: "",
+  graphPinnedProfileIds: [],
+  graphHoverProfileIds: []
 };
 
 const els = {
@@ -164,6 +166,87 @@ function bindEvents() {
   els.switchProfileButton.addEventListener("click", () => setView("profile"));
   els.createProfileForm.addEventListener("submit", createProfile);
   els.loginProfileForm.addEventListener("submit", loginProfile);
+  bindGraphFocusEvents();
+}
+
+function bindGraphFocusEvents() {
+  els.ladderRows.addEventListener("pointerover", (event) => {
+    const target = graphFocusTarget(event.target);
+    if (!target) {
+      return;
+    }
+
+    state.graphHoverProfileIds = graphProfileIds(target);
+    applyGraphFocus();
+  });
+
+  els.ladderRows.addEventListener("pointerout", (event) => {
+    const target = graphFocusTarget(event.target);
+    const nextTarget = graphFocusTarget(event.relatedTarget);
+    if (!target || target === nextTarget) {
+      return;
+    }
+
+    state.graphHoverProfileIds = [];
+    applyGraphFocus();
+  });
+
+  els.ladderRows.addEventListener("click", (event) => {
+    const target = graphFocusTarget(event.target);
+    if (!target) {
+      return;
+    }
+
+    const profileIds = graphProfileIds(target);
+    state.graphPinnedProfileIds = sameProfileSet(state.graphPinnedProfileIds, profileIds) ? [] : profileIds;
+    state.graphHoverProfileIds = [];
+    applyGraphFocus();
+  });
+
+  els.ladderRows.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") {
+      return;
+    }
+
+    const target = graphFocusTarget(event.target);
+    if (!target) {
+      return;
+    }
+
+    event.preventDefault();
+    const profileIds = graphProfileIds(target);
+    state.graphPinnedProfileIds = sameProfileSet(state.graphPinnedProfileIds, profileIds) ? [] : profileIds;
+    state.graphHoverProfileIds = [];
+    applyGraphFocus();
+  });
+}
+
+function graphFocusTarget(target) {
+  return target?.closest?.(".graph-focus-target");
+}
+
+function graphProfileIds(target) {
+  return (target.dataset.profileIds || target.dataset.profileId || "")
+    .split(",")
+    .map((profileId) => profileId.trim())
+    .filter(Boolean);
+}
+
+function sameProfileSet(first, second) {
+  return first.length === second.length && first.every((profileId) => second.includes(profileId));
+}
+
+function applyGraphFocus() {
+  const activeProfileIds = state.graphHoverProfileIds.length ? state.graphHoverProfileIds : state.graphPinnedProfileIds;
+  els.ladderRows.classList.toggle("graph-has-focus", activeProfileIds.length > 0);
+  els.ladderRows.querySelectorAll("[data-profile-id]").forEach((item) => {
+    const isActive = activeProfileIds.includes(item.dataset.profileId);
+    item.classList.toggle("is-focused", isActive);
+    item.classList.toggle("is-muted", activeProfileIds.length > 0 && !isActive);
+    if (item.matches(".points-legend-item")) {
+      item.setAttribute("aria-pressed", String(state.graphPinnedProfileIds.includes(item.dataset.profileId)));
+    }
+  });
 }
 
 function setView(viewName) {
@@ -183,6 +266,7 @@ function render() {
   renderStageTabs();
   renderMatches();
   renderLadder();
+  applyGraphFocus();
 }
 
 function applyLadderTestMatch() {
@@ -381,18 +465,16 @@ function renderLadder() {
   const rows = state.profiles
     .map((profile) => ({
       profile,
-      points: countPoints(profile.id),
-      pending: countPending(profile.id)
+      points: countPoints(profile.id)
     }))
-    .sort((a, b) => b.points - a.points || a.pending - b.pending || a.profile.name.localeCompare(b.profile.name));
+    .sort((a, b) => b.points - a.points || a.profile.name.localeCompare(b.profile.name));
 
   els.ladderRows.innerHTML = rows.length
     ? `${rows.map((row, index) => `
-      <div class="ladder-row ${SHOW_LADDER_TIP_HISTORY ? "with-tip-history" : ""}">
+      <div class="ladder-row ${SHOW_LADDER_TIP_HISTORY ? "with-tip-history" : ""}" data-profile-id="${escapeHtml(row.profile.id)}">
         <span>${index + 1}</span>
         ${ladderPlayerCell(row.profile)}
         <span>${row.points}</span>
-        <span>${row.pending}</span>
       </div>
     `).join("")}${ladderPointsGraph(rows.map((row) => row.profile))}`
     : `<div class="empty-state">No profiles yet.</div>`;
@@ -429,25 +511,36 @@ function ladderPointsGraph(profiles) {
   const xFor = (index) => pad.left + (matches.length === 1 ? plotWidth : (plotWidth * index) / (matches.length - 1));
   const yFor = (points) => pad.top + plotHeight - (plotHeight * points) / maxPoints;
   const gridValues = graphGridValues(maxPoints);
-  const lines = series.map((item) => {
-    const points = item.values
+  const chartSeries = series.map((item) => ({
+    ...item,
+    points: item.values
       .map((value, index) => value === null ? null : {
+        index,
+        value,
         x: xFor(index).toFixed(1),
         y: yFor(value).toFixed(1)
       })
-      .filter(Boolean);
-
-    if (points.length === 0) {
+      .filter(Boolean)
+  }));
+  const segmentGroups = graphSegmentGroups(chartSeries);
+  const dotGroups = graphDotGroups(chartSeries);
+  const lines = chartSeries.map((item) => {
+    if (item.points.length === 0) {
       return "";
     }
 
-    const line = points.length > 1
-      ? `<polyline class="points-line" points="${points.map((point) => `${point.x},${point.y}`).join(" ")}" style="--series-color:${item.color}"></polyline>`
+    const line = item.points.length > 1
+      ? `<polyline class="points-line" data-profile-id="${escapeHtml(item.profile.id)}" points="${item.points.map((point) => `${point.x},${point.y}`).join(" ")}" style="--series-color:${item.color}"></polyline>`
       : "";
-    const dots = points.map((point) => `<circle class="points-dot" cx="${point.x}" cy="${point.y}" r="3.5" style="--series-color:${item.color}"></circle>`).join("");
+    const dots = item.points.map((point) => `<circle class="points-dot" data-profile-id="${escapeHtml(item.profile.id)}" cx="${point.x}" cy="${point.y}" r="3.5" style="--series-color:${item.color}"></circle>`).join("");
 
     return `${line}${dots}`;
   }).join("");
+  const hitTargets = `${segmentGroups.map((group) => `
+  <line class="points-hit-segment graph-focus-target" data-profile-ids="${escapeHtml(group.profileIds.join(","))}" x1="${group.start.x}" y1="${group.start.y}" x2="${group.end.x}" y2="${group.end.y}"></line>
+`).join("")}${dotGroups.map((group) => `
+  <circle class="points-hit-dot graph-focus-target" data-profile-ids="${escapeHtml(group.profileIds.join(","))}" cx="${group.x}" cy="${group.y}" r="8"></circle>
+`).join("")}`;
 
   return `
     <div class="points-graph">
@@ -465,10 +558,11 @@ function ladderPointsGraph(profiles) {
           `).join("")}
           ${matches.map((match, index) => `<text class="points-axis-label" x="${xFor(index).toFixed(1)}" y="${height - 10}" text-anchor="middle">${index + 1}</text>`).join("")}
           ${lines}
+          ${hitTargets}
         </svg>
       </div>
       <div class="points-legend">
-        ${series.map((item) => `<span class="points-legend-item"><span class="points-legend-swatch" style="--series-color:${item.color}"></span>${escapeHtml(item.profile.name)}</span>`).join("")}
+        ${series.map((item) => `<button class="points-legend-item graph-focus-target" data-profile-id="${escapeHtml(item.profile.id)}" data-profile-ids="${escapeHtml(item.profile.id)}" type="button"><span class="points-legend-swatch" style="--series-color:${item.color}"></span>${escapeHtml(item.profile.name)}</button>`).join("")}
       </div>
     </div>
   `;
@@ -478,6 +572,43 @@ function graphMatches() {
   return state.fixtures
     .filter((match) => match.status === "FINISHED" && match.winnerTeamId && hasPlayableTeams(match))
     .sort((a, b) => new Date(a.kickoffUtc) - new Date(b.kickoffUtc));
+}
+
+function graphSegmentGroups(chartSeries) {
+  const groups = new Map();
+  chartSeries.forEach((item) => {
+    item.points.slice(1).forEach((point, index) => {
+      const start = item.points[index];
+      const key = `${start.x},${start.y}-${point.x},${point.y}`;
+      if (!groups.has(key)) {
+        groups.set(key, {
+          start,
+          end: point,
+          profileIds: []
+        });
+      }
+      groups.get(key).profileIds.push(item.profile.id);
+    });
+  });
+  return [...groups.values()];
+}
+
+function graphDotGroups(chartSeries) {
+  const groups = new Map();
+  chartSeries.forEach((item) => {
+    item.points.forEach((point) => {
+      const key = `${point.x},${point.y}`;
+      if (!groups.has(key)) {
+        groups.set(key, {
+          x: point.x,
+          y: point.y,
+          profileIds: []
+        });
+      }
+      groups.get(key).profileIds.push(item.profile.id);
+    });
+  });
+  return [...groups.values()];
 }
 
 function pointsSeriesForProfile(profile, matches, index) {
@@ -732,12 +863,6 @@ function startingPoints(profile) {
   return Number.isFinite(value) ? value : 0;
 }
 
-function countPending(profileId) {
-  return state.fixtures.filter((match) => {
-    const pick = state.tips[profileId]?.[match.id];
-    return pick && match.status !== "FINISHED";
-  }).length;
-}
 
 function getNextLockoutText() {
   const next = state.fixtures

@@ -527,7 +527,7 @@ h1 {
 .ladder-head,
 .ladder-row {
   display: grid;
-  grid-template-columns: 70px 1fr 90px 90px;
+  grid-template-columns: 70px 1fr 90px;
   gap: 10px;
   padding: 14px 16px;
 }
@@ -544,7 +544,9 @@ h1 {
   border-top: 1px solid var(--line);
   background: rgba(16, 31, 27, 0.7);
   font-weight: 800;
+  transition: background 160ms ease, opacity 160ms ease, box-shadow 160ms ease;
 }
+
 
 .ladder-player-cell {
   display: grid;
@@ -664,13 +666,50 @@ h1 {
   stroke-width: 3;
   stroke-linecap: round;
   stroke-linejoin: round;
+  opacity: 0.52;
   filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.28));
+  pointer-events: none;
+  transition: opacity 160ms ease, stroke-width 160ms ease, filter 160ms ease;
+}
+
+.graph-has-focus .points-line.is-muted {
+  opacity: 0.14;
+}
+
+.graph-has-focus .points-line.is-focused {
+  opacity: 1;
+  stroke-width: 4.4;
+  filter: drop-shadow(0 0 10px rgba(57, 196, 141, 0.35));
 }
 
 .points-dot {
   fill: var(--series-color);
   stroke: #07110f;
   stroke-width: 2;
+  opacity: 0.72;
+  pointer-events: none;
+  transition: opacity 160ms ease, r 160ms ease;
+}
+
+.graph-has-focus .points-dot.is-muted {
+  opacity: 0.18;
+}
+
+.graph-has-focus .points-dot.is-focused {
+  opacity: 1;
+}
+
+.points-hit-segment,
+.points-hit-dot {
+  cursor: pointer;
+  fill: transparent;
+  pointer-events: all;
+  stroke: transparent;
+}
+
+.points-hit-segment {
+  stroke-width: 14;
+  stroke-linecap: round;
 }
 
 .points-legend {
@@ -685,9 +724,33 @@ h1 {
   align-items: center;
   gap: 7px;
   min-height: 26px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 4px 8px;
   color: var(--muted);
+  background: transparent;
+  font: inherit;
   font-size: 0.82rem;
   font-weight: 800;
+  cursor: pointer;
+  transition: color 160ms ease, background 160ms ease, border-color 160ms ease, opacity 160ms ease;
+}
+
+.points-legend-item:hover,
+.points-legend-item:focus-visible,
+.points-legend-item.is-focused {
+  color: var(--text);
+  border-color: rgba(224, 244, 235, 0.18);
+  background: rgba(238, 247, 241, 0.07);
+}
+
+.points-legend-item:focus-visible {
+  outline: 2px solid rgba(57, 196, 141, 0.72);
+  outline-offset: 2px;
+}
+
+.graph-has-focus .points-legend-item.is-muted {
+  opacity: 0.42;
 }
 
 .points-legend-swatch {
@@ -829,7 +892,7 @@ form .button {
 
   .ladder-head,
   .ladder-row {
-    grid-template-columns: 48px 1fr 70px 74px;
+    grid-template-columns: 48px 1fr 70px;
     padding: 12px 10px;
   }
 }
