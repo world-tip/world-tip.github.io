@@ -419,7 +419,8 @@ function ladderPointsGraph(profiles) {
   }
 
   const series = profiles.map((profile, index) => pointsSeriesForProfile(profile, matches, index));
-  const maxPoints = Math.max(1, ...series.flatMap((item) => item.values));
+  const plottedValues = series.flatMap((item) => item.values.filter((points) => points !== null));
+  const maxPoints = Math.max(1, ...plottedValues);
   const width = 720;
   const height = 260;
   const pad = { top: 22, right: 26, bottom: 38, left: 36 };
@@ -428,10 +429,25 @@ function ladderPointsGraph(profiles) {
   const xFor = (index) => pad.left + (matches.length === 1 ? plotWidth : (plotWidth * index) / (matches.length - 1));
   const yFor = (points) => pad.top + plotHeight - (plotHeight * points) / maxPoints;
   const gridValues = graphGridValues(maxPoints);
-  const lines = series.map((item) => `
-    <polyline class="points-line" points="${item.values.map((points, index) => `${xFor(index).toFixed(1)},${yFor(points).toFixed(1)}`).join(" ")}" style="--series-color:${item.color}"></polyline>
-    ${item.values.map((points, index) => `<circle class="points-dot" cx="${xFor(index).toFixed(1)}" cy="${yFor(points).toFixed(1)}" r="3.5" style="--series-color:${item.color}"></circle>`).join("")}
-  `).join("");
+  const lines = series.map((item) => {
+    const points = item.values
+      .map((value, index) => value === null ? null : {
+        x: xFor(index).toFixed(1),
+        y: yFor(value).toFixed(1)
+      })
+      .filter(Boolean);
+
+    if (points.length === 0) {
+      return "";
+    }
+
+    const line = points.length > 1
+      ? `<polyline class="points-line" points="${points.map((point) => `${point.x},${point.y}`).join(" ")}" style="--series-color:${item.color}"></polyline>`
+      : "";
+    const dots = points.map((point) => `<circle class="points-dot" cx="${point.x}" cy="${point.y}" r="3.5" style="--series-color:${item.color}"></circle>`).join("");
+
+    return `${line}${dots}`;
+  }).join("");
 
   return `
     <div class="points-graph">
@@ -466,7 +482,13 @@ function graphMatches() {
 
 function pointsSeriesForProfile(profile, matches, index) {
   let total = startingPoints(profile);
+  const joinedAt = profileCreatedAtTime(profile);
   const values = matches.map((match) => {
+    const lockAt = new Date(match.lockAtUtc || match.kickoffUtc).getTime();
+    if (Number.isFinite(joinedAt) && Number.isFinite(lockAt) && lockAt < joinedAt) {
+      return null;
+    }
+
     if (state.tips[profile.id]?.[match.id] === match.winnerTeamId) {
       total += 1;
     }
@@ -478,6 +500,11 @@ function pointsSeriesForProfile(profile, matches, index) {
     values,
     color: graphColor(index)
   };
+}
+
+function profileCreatedAtTime(profile) {
+  const createdAt = new Date(profile?.createdAt || 0).getTime();
+  return Number.isFinite(createdAt) ? createdAt : null;
 }
 
 function graphGridValues(maxPoints) {
