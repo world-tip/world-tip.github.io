@@ -469,15 +469,33 @@ function renderLadder() {
     }))
     .sort((a, b) => b.points - a.points || a.profile.name.localeCompare(b.profile.name));
 
-  els.ladderRows.innerHTML = rows.length
-    ? `${rows.map((row, index) => `
-      <div class="ladder-row ${SHOW_LADDER_TIP_HISTORY ? "with-tip-history" : ""}" data-profile-id="${escapeHtml(row.profile.id)}">
-        <span>${index + 1}</span>
-        ${ladderPlayerCell(row.profile)}
-        <span>${row.points}</span>
+  if (!rows.length) {
+    els.ladderRows.innerHTML = `<div class="empty-state">No profiles yet.</div>`;
+    return;
+  }
+
+  const profiles = rows.map((row) => row.profile);
+  const playerColumnStyle = ladderPlayerColumnStyle(profiles);
+  els.ladderRows.innerHTML = `
+    <div class="ladder-table ${SHOW_LADDER_TIP_HISTORY ? "with-tip-history" : ""}" style="${playerColumnStyle}">
+      <div class="ladder-fixed">
+        <div class="ladder-head">
+        <span>Rank</span>
+        <span>Player</span>
+        <span>Points</span>
       </div>
-    `).join("")}${ladderPointsGraph(rows.map((row) => row.profile))}`
-    : `<div class="empty-state">No profiles yet.</div>`;
+        ${rows.map((row, index) => `
+          <div class="ladder-row" data-profile-id="${escapeHtml(row.profile.id)}">
+            <span>${index + 1}</span>
+            ${ladderPlayerCell(row.profile)}
+            <span>${row.points}</span>
+          </div>
+        `).join("")}
+      </div>
+      ${SHOW_LADDER_TIP_HISTORY ? ladderHistoryGrid(profiles) : ""}
+    </div>
+    ${ladderPointsGraph(profiles)}
+  `;
 }
 
 function ladderPointsGraph(profiles) {
@@ -649,24 +667,44 @@ function graphColor(index) {
 }
 
 function ladderPlayerCell(profile) {
-  if (!SHOW_LADDER_TIP_HISTORY) {
-    return `<span>${escapeHtml(profile.name)}</span>`;
-  }
-
-  const history = ladderTipHistory(profile.id);
   return `
     <span class="ladder-player-cell">
       <span class="ladder-player-name">${escapeHtml(profile.name)}</span>
-      ${history.length ? `<span class="tip-history-strip" aria-label="Locked historical tips">${history.join("")}</span>` : ""}
     </span>
   `;
 }
 
-function ladderTipHistory(profileId) {
-  return state.fixtures
-    .filter((match) => isLocked(match) && hasPlayableTeams(match))
-    .map((match) => ladderTipIndicator(match, state.tips[profileId]?.[match.id]))
-    .filter(Boolean);
+function ladderPlayerColumnStyle(profiles) {
+  const longestNameLength = profiles.reduce((longest, profile) => Math.max(longest, String(profile.name || "").length), "Player".length);
+  const widthCh = Math.min(Math.max(longestNameLength + 1, 7), 18);
+  return `--player-column-width:${widthCh}ch`;
+}
+
+function ladderHistoryGrid(profiles) {
+  const matches = ladderHistoryMatches();
+  if (matches.length === 0) {
+    return `<div class="ladder-history-empty">No locked tips yet.</div>`;
+  }
+
+  const columnStyle = `--history-columns:${matches.length}`;
+  return `
+    <div class="ladder-history-wrap" aria-label="Historical tips">
+      <div class="ladder-history-scroll">
+        <div class="ladder-history-head" style="${columnStyle}">
+          ${matches.map((match, index) => `<span title="${escapeHtml(match.homeTeam.shortName)} v ${escapeHtml(match.awayTeam.shortName)}">${index + 1}</span>`).join("")}
+        </div>
+        ${profiles.map((profile) => `
+          <div class="ladder-history-row" data-profile-id="${escapeHtml(profile.id)}" style="${columnStyle}">
+            ${matches.map((match) => ladderTipIndicator(match, state.tips[profile.id]?.[match.id])).join("")}
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  `;
+}
+
+function ladderHistoryMatches() {
+  return state.fixtures.filter((match) => isLocked(match) && hasPlayableTeams(match));
 }
 
 function hasPlayableTeams(match) {

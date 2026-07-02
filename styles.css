@@ -527,12 +527,14 @@ h1 {
 .ladder-head,
 .ladder-row {
   display: grid;
-  grid-template-columns: 70px 1fr 90px;
+  grid-template-columns: 52px minmax(7ch, var(--player-column-width, 12ch)) 64px;
   gap: 10px;
+  min-height: 67px;
   padding: 14px 16px;
 }
 
 .ladder-head {
+  min-height: 42px;
   color: var(--muted);
   background: rgba(238, 247, 241, 0.06);
   font-size: 0.78rem;
@@ -540,17 +542,29 @@ h1 {
   text-transform: uppercase;
 }
 
+.ladder-table {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  align-items: start;
+}
+
+.ladder-fixed {
+  position: relative;
+  z-index: 2;
+  background: rgba(8, 20, 17, 0.96);
+  box-shadow: 12px 0 22px rgba(0, 0, 0, 0.16);
+}
+
 .ladder-row {
   border-top: 1px solid var(--line);
   background: rgba(16, 31, 27, 0.7);
   font-weight: 800;
-  transition: background 160ms ease, opacity 160ms ease, box-shadow 160ms ease;
+  transition: opacity 160ms ease;
 }
-
 
 .ladder-player-cell {
   display: grid;
-  gap: 8px;
+  align-content: center;
   min-width: 0;
 }
 
@@ -560,12 +574,54 @@ h1 {
   white-space: nowrap;
 }
 
-.tip-history-strip {
-  display: flex;
-  flex-wrap: wrap;
+.ladder-history-wrap {
+  min-width: 0;
+  border-left: 1px solid var(--line);
+  background: rgba(8, 20, 17, 0.28);
+}
+
+.ladder-history-scroll {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-color: rgba(224, 244, 235, 0.28) transparent;
+}
+
+.ladder-history-head,
+.ladder-history-row {
+  display: grid;
+  grid-template-columns: repeat(var(--history-columns), 70px);
   gap: 8px;
+  width: max-content;
+  min-width: 100%;
+  padding: 0 16px;
+}
+
+.ladder-history-head {
   min-height: 42px;
   align-items: center;
+  color: var(--muted);
+  background: rgba(238, 247, 241, 0.06);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-align: center;
+}
+
+.ladder-history-row {
+  min-height: 67px;
+  align-items: center;
+  border-top: 1px solid var(--line);
+  background: rgba(16, 31, 27, 0.5);
+}
+
+.ladder-history-empty {
+  display: grid;
+  min-height: 67px;
+  place-items: center;
+  border-left: 1px solid var(--line);
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  background: rgba(16, 31, 27, 0.5);
+  font-weight: 800;
 }
 
 .tip-orb {
@@ -890,11 +946,28 @@ form .button {
     width: 100%;
   }
 
-  .ladder-head,
-  .ladder-row {
-    grid-template-columns: 48px 1fr 70px;
-    padding: 12px 10px;
-  }
+.ladder-head,
+.ladder-row {
+  grid-template-columns: 34px minmax(7ch, var(--player-column-width, 12ch)) 48px;
+  gap: 8px;
+  min-height: 63px;
+  padding: 12px 10px;
+}
+
+.ladder-table {
+  grid-template-columns: max-content minmax(0, 1fr);
+}
+
+.ladder-history-head,
+.ladder-history-row {
+  grid-template-columns: repeat(var(--history-columns), 64px);
+  min-height: 63px;
+  padding: 0 10px;
+}
+
+.ladder-history-head {
+  min-height: 42px;
+}
 }
 
 @media (max-width: 520px) {
