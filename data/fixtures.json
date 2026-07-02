@@ -5,14 +5,14 @@
     "stageStart": "Round of 32",
     "source": "https://www.football-data.org/"
   },
-  "updatedAtUtc": "2026-07-02T02:44:57.194Z",
+  "updatedAtUtc": "2026-07-02T10:15:42.333Z",
   "lockMinutesBeforeKickoff": 15,
   "api": {
     "competitionCode": "WC",
     "season": "2026",
     "endpoint": "https://api.football-data.org/v4/competitions/WC/matches?season=2026",
     "lastStatus": 200,
-    "lastCheckedAtUtc": "2026-07-02T02:44:57.189Z",
+    "lastCheckedAtUtc": "2026-07-02T10:15:42.327Z",
     "throttle": {
       "apiVersion": "v4",
       "authenticatedClient": "Liam",
@@ -207,8 +207,8 @@
       "stage": "Round of 32",
       "apiStage": "LAST_32",
       "matchday": null,
-      "kickoffUtc": "2026-07-01T01:00:00Z",
-      "lockAtUtc": "2026-07-01T00:45:00.000Z",
+      "kickoffUtc": "2026-07-01T02:00:00Z",
+      "lockAtUtc": "2026-07-01T01:45:00.000Z",
       "locked": true,
       "status": "FINISHED",
       "homeTeam": {
@@ -603,17 +603,17 @@
       "status": "TIMED",
       "homeTeam": {
         "id": "home",
-        "footballDataTeamId": null,
-        "name": "Home TBD",
-        "shortName": "TBD",
-        "flag": ""
+        "footballDataTeamId": 769,
+        "name": "Mexico",
+        "shortName": "MEX",
+        "flag": "🇲🇽"
       },
       "awayTeam": {
         "id": "away",
-        "footballDataTeamId": null,
-        "name": "Away TBD",
-        "shortName": "TBD",
-        "flag": ""
+        "footballDataTeamId": 770,
+        "name": "England",
+        "shortName": "ENG",
+        "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"
       },
       "score": {
         "home": null,
@@ -663,17 +663,17 @@
       "status": "TIMED",
       "homeTeam": {
         "id": "home",
-        "footballDataTeamId": null,
-        "name": "Home TBD",
-        "shortName": "TBD",
-        "flag": ""
+        "footballDataTeamId": 771,
+        "name": "United States",
+        "shortName": "USA",
+        "flag": "🇺🇸"
       },
       "awayTeam": {
         "id": "away",
-        "footballDataTeamId": null,
-        "name": "Away TBD",
-        "shortName": "TBD",
-        "flag": ""
+        "footballDataTeamId": 805,
+        "name": "Belgium",
+        "shortName": "BEL",
+        "flag": "🇧🇪"
       },
       "score": {
         "home": null,
