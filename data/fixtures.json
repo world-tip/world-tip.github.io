@@ -5,14 +5,14 @@
     "stageStart": "Round of 32",
     "source": "https://www.football-data.org/"
   },
-  "updatedAtUtc": "2026-07-03T06:46:29.829Z",
+  "updatedAtUtc": "2026-07-03T08:37:21.347Z",
   "lockMinutesBeforeKickoff": 15,
   "api": {
     "competitionCode": "WC",
     "season": "2026",
     "endpoint": "https://api.football-data.org/v4/competitions/WC/matches?season=2026",
     "lastStatus": 200,
-    "lastCheckedAtUtc": "2026-07-03T06:46:29.823Z",
+    "lastCheckedAtUtc": "2026-07-03T08:37:21.341Z",
     "throttle": {
       "apiVersion": "v4",
       "authenticatedClient": "Liam",
@@ -47,7 +47,8 @@
       },
       "score": {
         "home": 0,
-        "away": 1
+        "away": 1,
+        "penalties": null
       },
       "winnerTeamId": "can"
     },
@@ -77,7 +78,8 @@
       },
       "score": {
         "home": 2,
-        "away": 1
+        "away": 1,
+        "penalties": null
       },
       "winnerTeamId": "bra"
     },
@@ -175,7 +177,8 @@
       },
       "score": {
         "home": 1,
-        "away": 2
+        "away": 2,
+        "penalties": null
       },
       "winnerTeamId": "away"
     },
@@ -205,7 +208,8 @@
       },
       "score": {
         "home": 3,
-        "away": 0
+        "away": 0,
+        "penalties": null
       },
       "winnerTeamId": "home"
     },
@@ -235,7 +239,8 @@
       },
       "score": {
         "home": 2,
-        "away": 0
+        "away": 0,
+        "penalties": null
       },
       "winnerTeamId": "mex"
     },
@@ -265,7 +270,8 @@
       },
       "score": {
         "home": 2,
-        "away": 1
+        "away": 1,
+        "penalties": null
       },
       "winnerTeamId": "home"
     },
@@ -295,7 +301,8 @@
       },
       "score": {
         "home": 3,
-        "away": 2
+        "away": 2,
+        "penalties": null
       },
       "winnerTeamId": "home"
     },
@@ -325,7 +332,8 @@
       },
       "score": {
         "home": 2,
-        "away": 0
+        "away": 0,
+        "penalties": null
       },
       "winnerTeamId": "usa"
     },
@@ -355,7 +363,8 @@
       },
       "score": {
         "home": 3,
-        "away": 0
+        "away": 0,
+        "penalties": null
       },
       "winnerTeamId": "home"
     },
@@ -385,7 +394,8 @@
       },
       "score": {
         "home": 2,
-        "away": 1
+        "away": 1,
+        "penalties": null
       },
       "winnerTeamId": "home"
     },
@@ -415,7 +425,8 @@
       },
       "score": {
         "home": 2,
-        "away": 0
+        "away": 0,
+        "penalties": null
       },
       "winnerTeamId": "sui"
     },
@@ -445,7 +456,8 @@
       },
       "score": {
         "home": null,
-        "away": null
+        "away": null,
+        "penalties": null
       },
       "winnerTeamId": null
     },
@@ -475,7 +487,8 @@
       },
       "score": {
         "home": null,
-        "away": null
+        "away": null,
+        "penalties": null
       },
       "winnerTeamId": null
     },
@@ -505,7 +518,8 @@
       },
       "score": {
         "home": null,
-        "away": null
+        "away": null,
+        "penalties": null
       },
       "winnerTeamId": null
     },
@@ -535,7 +549,8 @@
       },
       "score": {
         "home": null,
-        "away": null
+        "away": null,
+        "penalties": null
       },
       "winnerTeamId": null
     },
@@ -565,7 +580,8 @@
       },
       "score": {
         "home": null,
-        "away": null
+        "away": null,
+        "penalties": null
       },
       "winnerTeamId": null
     },
@@ -595,7 +611,8 @@
       },
       "score": {
         "home": null,
-        "away": null
+        "away": null,
+        "penalties": null
       },
       "winnerTeamId": null
     },
@@ -625,7 +642,8 @@
       },
       "score": {
         "home": null,
-        "away": null
+        "away": null,
+        "penalties": null
       },
       "winnerTeamId": null
     },
@@ -655,7 +673,8 @@
       },
       "score": {
         "home": null,
-        "away": null
+        "away": null,
+        "penalties": null
       },
       "winnerTeamId": null
     },
@@ -685,7 +704,8 @@
       },
       "score": {
         "home": null,
-        "away": null
+        "away": null,
+        "penalties": null
       },
       "winnerTeamId": null
     },
@@ -715,7 +735,8 @@
       },
       "score": {
         "home": null,
-        "away": null
+        "away": null,
+        "penalties": null
       },
       "winnerTeamId": null
     },
@@ -745,7 +766,8 @@
       },
       "score": {
         "home": null,
-        "away": null
+        "away": null,
+        "penalties": null
       },
       "winnerTeamId": null
     },
@@ -775,7 +797,8 @@
       },
       "score": {
         "home": null,
-        "away": null
+        "away": null,
+        "penalties": null
       },
       "winnerTeamId": null
     },
@@ -805,7 +828,8 @@
       },
       "score": {
         "home": null,
-        "away": null
+        "away": null,
+        "penalties": null
       },
       "winnerTeamId": null
     },
@@ -835,7 +859,8 @@
       },
       "score": {
         "home": null,
-        "away": null
+        "away": null,
+        "penalties": null
       },
       "winnerTeamId": null
     },
@@ -865,7 +890,8 @@
       },
       "score": {
         "home": null,
-        "away": null
+        "away": null,
+        "penalties": null
       },
       "winnerTeamId": null
     },
@@ -895,7 +921,8 @@
       },
       "score": {
         "home": null,
-        "away": null
+        "away": null,
+        "penalties": null
       },
       "winnerTeamId": null
     },
@@ -925,7 +952,8 @@
       },
       "score": {
         "home": null,
-        "away": null
+        "away": null,
+        "penalties": null
       },
       "winnerTeamId": null
     },
@@ -955,7 +983,8 @@
       },
       "score": {
         "home": null,
-        "away": null
+        "away": null,
+        "penalties": null
       },
       "winnerTeamId": null
     },
@@ -985,7 +1014,8 @@
       },
       "score": {
         "home": null,
-        "away": null
+        "away": null,
+        "penalties": null
       },
       "winnerTeamId": null
     }
