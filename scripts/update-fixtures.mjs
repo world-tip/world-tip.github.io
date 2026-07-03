@@ -260,10 +260,39 @@ function normalizeTeam(apiTeam, previousTeam, side, matchId) {
 }
 
 function normalizeScore(apiMatch) {
-  const scoreSource = apiMatch.score?.fullTime || apiMatch.score?.regularTime || {};
+  const penalties = scorePair(apiMatch.score?.penalties);
+  const regularTime = scorePair(apiMatch.score?.regularTime);
+  const extraTime = scorePair(apiMatch.score?.extraTime);
+  const matchScore = penalties
+    ? addScores(regularTime, extraTime) || regularTime || scorePair(apiMatch.score?.fullTime)
+    : scorePair(apiMatch.score?.fullTime) || regularTime;
+
   return {
-    home: scoreSource.home ?? null,
-    away: scoreSource.away ?? null
+    home: matchScore?.home ?? null,
+    away: matchScore?.away ?? null,
+    penalties
+  };
+}
+
+function scorePair(score) {
+  if (!score || score.home == null || score.away == null) {
+    return null;
+  }
+
+  return {
+    home: score.home,
+    away: score.away
+  };
+}
+
+function addScores(first, second) {
+  if (!first && !second) {
+    return null;
+  }
+
+  return {
+    home: (first?.home ?? 0) + (second?.home ?? 0),
+    away: (first?.away ?? 0) + (second?.away ?? 0)
   };
 }
 
@@ -285,6 +314,14 @@ function getWinnerTeamId(apiMatch, homeTeam, awayTeam, score) {
   }
 
   if (score.away > score.home) {
+    return awayTeam.id;
+  }
+
+  if (score.penalties?.home > score.penalties?.away) {
+    return homeTeam.id;
+  }
+
+  if (score.penalties?.away > score.penalties?.home) {
     return awayTeam.id;
   }
 

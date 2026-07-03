@@ -106,8 +106,12 @@
         "flag": "🇵🇾"
       },
       "score": {
-        "home": 4,
-        "away": 5
+        "home": 1,
+        "away": 1,
+        "penalties": {
+          "home": 3,
+          "away": 4
+        }
       },
       "winnerTeamId": "away"
     },
@@ -136,8 +140,12 @@
         "flag": "🇲🇦"
       },
       "score": {
-        "home": 3,
-        "away": 4
+        "home": 1,
+        "away": 1,
+        "penalties": {
+          "home": 2,
+          "away": 3
+        }
       },
       "winnerTeamId": "mar"
     },

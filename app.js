@@ -443,8 +443,8 @@ function matchCardMarkup(match) {
         <span class="lock-badge ${locked ? "locked" : ""}">${locked ? "Picks visible" : `Locks ${formatTime(match.lockAtUtc)}`}</span>
       </div>
       <div class="tip-action-area">
-        ${teamMarkup(match, match.homeTeam, match.score?.home, savedPick, stagedPick, locked)}
-        ${teamMarkup(match, match.awayTeam, match.score?.away, savedPick, stagedPick, locked)}
+        ${teamMarkup(match, match.homeTeam, match.score?.home, match.score?.penalties?.home, savedPick, stagedPick, locked)}
+        ${teamMarkup(match, match.awayTeam, match.score?.away, match.score?.penalties?.away, savedPick, stagedPick, locked)}
         ${!locked && stagedPick ? `
           <div class="confirm-row">
             <button class="button primary confirm-tip" data-match-id="${match.id}" type="button">${confirmLabel}</button>
@@ -910,11 +910,12 @@ function getNextLockoutText() {
   return next ? `${formatDate(next.lockAtUtc)} for ${next.homeTeam.shortName} v ${next.awayTeam.shortName}` : "All current matches locked";
 }
 
-function teamMarkup(match, team, score, savedPick, stagedPick, locked) {
+function teamMarkup(match, team, score, penaltyScore, savedPick, stagedPick, locked) {
   const flag = teamFlag(team);
   const unavailable = team.shortName === "TBD";
   const disabled = locked || unavailable ? "disabled" : "";
   const stateClass = getTeamPickClass(team.id, savedPick, stagedPick);
+  const hasPenaltyScore = penaltyScore != null;
 
   return `
     <button class="team-row team-pick ${stateClass}" data-match-id="${match.id}" data-team-id="${team.id}" ${disabled} type="button">
@@ -922,7 +923,10 @@ function teamMarkup(match, team, score, savedPick, stagedPick, locked) {
         <span class="flag" aria-hidden="true">${escapeHtml(flag)}</span>
         <span>${escapeHtml(team.name)}</span>
       </span>
-      <span class="team-score">${score ?? "-"}</span>
+      <span class="team-scores ${hasPenaltyScore ? "with-penalties" : ""}">
+        <span class="team-score">${hasPenaltyScore ? `<span class="score-label">Score</span>` : ""}${score ?? "-"}</span>
+        ${hasPenaltyScore ? `<span class="team-score penalty-score"><span class="score-label">Pens</span>${penaltyScore}</span>` : ""}
+      </span>
     </button>
   `;
 }

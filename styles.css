@@ -447,8 +447,51 @@ h1 {
   font-size: 1.25rem;
 }
 
+.team-scores {
+  display: inline-flex;
+  align-items: stretch;
+  justify-content: flex-end;
+  gap: 6px;
+  flex: 0 0 auto;
+}
+
 .team-score {
-  font-weight: 900;
+  display: grid;
+  min-width: 34px;
+  min-height: 34px;
+  place-items: center;
+  padding: 0 9px;
+  border-radius: 8px;
+  color: var(--text);
+  background: rgba(238, 247, 241, 0.08);
+  font-size: 1.05rem;
+  font-weight: 950;
+  line-height: 1;
+}
+
+.team-scores.with-penalties .team-score {
+  min-width: 48px;
+  min-height: 44px;
+  gap: 4px;
+  padding: 6px 9px;
+  border: 1px solid rgba(224, 244, 235, 0.12);
+  background: rgba(238, 247, 241, 0.055);
+}
+
+.team-score.penalty-score {
+  border-color: rgba(240, 184, 63, 0.34);
+  color: #ffe08a;
+  background: rgba(240, 184, 63, 0.13);
+  box-shadow: inset 0 0 0 1px rgba(240, 184, 63, 0.08);
+}
+
+.score-label {
+  color: var(--muted);
+  font-size: 0.58rem;
+  font-weight: 950;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-transform: uppercase;
 }
 
 .tip-choice {
@@ -991,6 +1034,10 @@ form .button {
   .team-row {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .team-scores {
+    justify-content: flex-start;
   }
 
   .tip-choice {
