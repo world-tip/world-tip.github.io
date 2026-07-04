@@ -5,14 +5,14 @@
     "stageStart": "Round of 32",
     "source": "https://www.football-data.org/"
   },
-  "updatedAtUtc": "2026-07-04T04:33:44.570Z",
+  "updatedAtUtc": "2026-07-04T07:48:57.615Z",
   "lockMinutesBeforeKickoff": 15,
   "api": {
     "competitionCode": "WC",
     "season": "2026",
     "endpoint": "https://api.football-data.org/v4/competitions/WC/matches?season=2026",
     "lastStatus": 200,
-    "lastCheckedAtUtc": "2026-07-04T04:33:44.565Z",
+    "lastCheckedAtUtc": "2026-07-04T07:48:57.610Z",
     "throttle": {
       "apiVersion": "v4",
       "authenticatedClient": "Liam",
@@ -662,17 +662,17 @@
       "status": "TIMED",
       "homeTeam": {
         "id": "home",
-        "footballDataTeamId": null,
-        "name": "Home TBD",
-        "shortName": "TBD",
-        "flag": ""
+        "footballDataTeamId": 765,
+        "name": "Portugal",
+        "shortName": "POR",
+        "flag": "🇵🇹"
       },
       "awayTeam": {
         "id": "away",
-        "footballDataTeamId": null,
-        "name": "Away TBD",
-        "shortName": "TBD",
-        "flag": ""
+        "footballDataTeamId": 760,
+        "name": "Spain",
+        "shortName": "ESP",
+        "flag": "🇪🇸"
       },
       "score": {
         "home": null,
@@ -724,17 +724,17 @@
       "status": "TIMED",
       "homeTeam": {
         "id": "home",
-        "footballDataTeamId": null,
-        "name": "Home TBD",
-        "shortName": "TBD",
-        "flag": ""
+        "footballDataTeamId": 762,
+        "name": "Argentina",
+        "shortName": "ARG",
+        "flag": "🇦🇷"
       },
       "awayTeam": {
         "id": "away",
-        "footballDataTeamId": null,
-        "name": "Away TBD",
-        "shortName": "TBD",
-        "flag": ""
+        "footballDataTeamId": 825,
+        "name": "Egypt",
+        "shortName": "EGY",
+        "flag": "🇪🇬"
       },
       "score": {
         "home": null,
@@ -755,17 +755,17 @@
       "status": "TIMED",
       "homeTeam": {
         "id": "home",
-        "footballDataTeamId": null,
-        "name": "Home TBD",
-        "shortName": "TBD",
-        "flag": ""
+        "footballDataTeamId": 788,
+        "name": "Switzerland",
+        "shortName": "SUI",
+        "flag": "🇨🇭"
       },
       "awayTeam": {
         "id": "away",
-        "footballDataTeamId": null,
-        "name": "Away TBD",
-        "shortName": "TBD",
-        "flag": ""
+        "footballDataTeamId": 818,
+        "name": "Colombia",
+        "shortName": "COL",
+        "flag": "🇨🇴"
       },
       "score": {
         "home": null,
