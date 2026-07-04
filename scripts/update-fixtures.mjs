@@ -7,6 +7,7 @@ const COMPETITION_CODE = process.env.FOOTBALL_DATA_COMPETITION || "WC";
 const SEASON = process.env.FOOTBALL_DATA_SEASON || "2026";
 const MIN_REQUESTS_AVAILABLE = Number(process.env.MIN_REQUESTS_AVAILABLE || 2);
 
+
 const KNOCKOUT_STAGES = new Set([
   "LAST_32",
   "ROUND_OF_32",
@@ -260,12 +261,15 @@ function normalizeTeam(apiTeam, previousTeam, side, matchId) {
 }
 
 function normalizeScore(apiMatch) {
-  const penalties = scorePair(apiMatch.score?.penalties);
+  const fullTime = scorePair(apiMatch.score?.fullTime);
   const regularTime = scorePair(apiMatch.score?.regularTime);
   const extraTime = scorePair(apiMatch.score?.extraTime);
-  const matchScore = penalties
-    ? addScores(regularTime, extraTime) || regularTime || scorePair(apiMatch.score?.fullTime)
-    : scorePair(apiMatch.score?.fullTime) || regularTime;
+  const isShootout = apiMatch.score?.duration === "PENALTY_SHOOTOUT" || Boolean(apiMatch.score?.penalties);
+  const matchScore = isShootout
+    ? addScores(regularTime, extraTime) || regularTime || fullTime
+    : fullTime || regularTime;
+  const derivedPenalties = isShootout ? subtractScores(fullTime, matchScore) : null;
+  const penalties = derivedPenalties || scorePair(apiMatch.score?.penalties);
 
   return {
     home: matchScore?.home ?? null,
@@ -294,6 +298,20 @@ function addScores(first, second) {
     home: (first?.home ?? 0) + (second?.home ?? 0),
     away: (first?.away ?? 0) + (second?.away ?? 0)
   };
+}
+
+function subtractScores(total, part) {
+  if (!total || !part) {
+    return null;
+  }
+
+  const home = total.home - part.home;
+  const away = total.away - part.away;
+  if (home < 0 || away < 0) {
+    return null;
+  }
+
+  return { home, away };
 }
 
 function getWinnerTeamId(apiMatch, homeTeam, awayTeam, score) {

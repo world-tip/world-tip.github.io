@@ -458,11 +458,11 @@
         "home": 1,
         "away": 1,
         "penalties": {
-          "home": 4,
+          "home": 2,
           "away": 4
         }
       },
-      "winnerTeamId": null
+      "winnerTeamId": "away"
     },
     {
       "id": "fd-537427",
