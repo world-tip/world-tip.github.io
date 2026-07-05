@@ -5,14 +5,14 @@
     "stageStart": "Round of 32",
     "source": "https://www.football-data.org/"
   },
-  "updatedAtUtc": "2026-07-05T01:56:06.812Z",
+  "updatedAtUtc": "2026-07-05T09:46:36.740Z",
   "lockMinutesBeforeKickoff": 15,
   "api": {
     "competitionCode": "WC",
     "season": "2026",
     "endpoint": "https://api.football-data.org/v4/competitions/WC/matches?season=2026",
     "lastStatus": 200,
-    "lastCheckedAtUtc": "2026-07-05T01:56:06.806Z",
+    "lastCheckedAtUtc": "2026-07-05T09:46:36.733Z",
     "throttle": {
       "apiVersion": "v4",
       "authenticatedClient": "Liam",
@@ -786,17 +786,17 @@
       "status": "TIMED",
       "homeTeam": {
         "id": "home",
-        "footballDataTeamId": null,
-        "name": "Home TBD",
-        "shortName": "TBD",
-        "flag": ""
+        "footballDataTeamId": 773,
+        "name": "France",
+        "shortName": "FRA",
+        "flag": "🇫🇷"
       },
       "awayTeam": {
         "id": "away",
-        "footballDataTeamId": null,
-        "name": "Away TBD",
-        "shortName": "TBD",
-        "flag": ""
+        "footballDataTeamId": 815,
+        "name": "Morocco",
+        "shortName": "MAR",
+        "flag": "🇲🇦"
       },
       "score": {
         "home": null,
