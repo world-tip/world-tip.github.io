@@ -5,14 +5,14 @@
     "stageStart": "Round of 32",
     "source": "https://www.football-data.org/"
   },
-  "updatedAtUtc": "2026-07-06T04:36:39.276Z",
+  "updatedAtUtc": "2026-07-06T12:31:46.044Z",
   "lockMinutesBeforeKickoff": 15,
   "api": {
     "competitionCode": "WC",
     "season": "2026",
     "endpoint": "https://api.football-data.org/v4/competitions/WC/matches?season=2026",
     "lastStatus": 200,
-    "lastCheckedAtUtc": "2026-07-06T04:36:39.270Z",
+    "lastCheckedAtUtc": "2026-07-06T12:31:46.040Z",
     "throttle": {
       "apiVersion": "v4",
       "authenticatedClient": "Liam",
@@ -848,17 +848,17 @@
       "status": "TIMED",
       "homeTeam": {
         "id": "home",
-        "footballDataTeamId": null,
-        "name": "Home TBD",
-        "shortName": "TBD",
-        "flag": ""
+        "footballDataTeamId": 8872,
+        "name": "Norway",
+        "shortName": "NOR",
+        "flag": "🇳🇴"
       },
       "awayTeam": {
         "id": "away",
-        "footballDataTeamId": null,
-        "name": "Away TBD",
-        "shortName": "TBD",
-        "flag": ""
+        "footballDataTeamId": 770,
+        "name": "England",
+        "shortName": "ENG",
+        "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"
       },
       "score": {
         "home": null,
