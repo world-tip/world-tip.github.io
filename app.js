@@ -359,7 +359,7 @@ function renderStageTabs() {
 
   const stages = matchStages();
   if (!state.selectedStage || !stages.includes(state.selectedStage)) {
-    state.selectedStage = stages[0] || "";
+    state.selectedStage = defaultMatchStage(stages);
   }
 
   els.stageTabs.hidden = false;
@@ -428,6 +428,21 @@ function matchStages() {
   return stages;
 }
 
+function defaultMatchStage(stages) {
+  const playableStages = stages.filter((stage) => state.fixtures.some((match) => match.stage === stage && hasPlayableTeams(match)));
+  const activeStage = playableStages.find((stage) => state.fixtures.some((match) => (
+    match.stage === stage &&
+    hasPlayableTeams(match) &&
+    match.status !== "FINISHED"
+  )));
+
+  if (activeStage) {
+    return activeStage;
+  }
+
+  return playableStages[playableStages.length - 1] || stages[stages.length - 1] || "";
+}
+
 function matchCardMarkup(match) {
   const locked = isLocked(match);
   const homePickers = getPickers(match.id, match.homeTeam.id);
@@ -440,7 +455,7 @@ function matchCardMarkup(match) {
     <article class="match-card" data-match-card="${match.id}">
       <div class="match-meta">
         <span>${escapeHtml(match.stage)} - ${formatDate(match.kickoffUtc)}</span>
-        <span class="lock-badge ${locked ? "locked" : ""}">${locked ? "Picks visible" : `Locks ${formatTime(match.lockAtUtc)}`}</span>
+        ${locked ? "" : `<span class="lock-badge">Locks ${formatTime(match.lockAtUtc)}</span>`}
       </div>
       <div class="tip-action-area">
         ${teamMarkup(match, match.homeTeam, match.score?.home, match.score?.penalties?.home, match.winnerTeamId === match.homeTeam.id, savedPick, stagedPick, locked)}
