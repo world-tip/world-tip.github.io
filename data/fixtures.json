@@ -5,14 +5,14 @@
     "stageStart": "Round of 32",
     "source": "https://www.football-data.org/"
   },
-  "updatedAtUtc": "2026-07-07T23:08:26.185Z",
+  "updatedAtUtc": "2026-07-08T07:42:48.728Z",
   "lockMinutesBeforeKickoff": 15,
   "api": {
     "competitionCode": "WC",
     "season": "2026",
     "endpoint": "https://api.football-data.org/v4/competitions/WC/matches?season=2026",
     "lastStatus": 200,
-    "lastCheckedAtUtc": "2026-07-07T23:08:26.177Z",
+    "lastCheckedAtUtc": "2026-07-08T07:42:48.721Z",
     "throttle": {
       "apiVersion": "v4",
       "authenticatedClient": "Liam",
@@ -882,17 +882,17 @@
       "status": "TIMED",
       "homeTeam": {
         "id": "home",
-        "footballDataTeamId": null,
-        "name": "Home TBD",
-        "shortName": "TBD",
-        "flag": ""
+        "footballDataTeamId": 762,
+        "name": "Argentina",
+        "shortName": "ARG",
+        "flag": "🇦🇷"
       },
       "awayTeam": {
         "id": "away",
-        "footballDataTeamId": null,
-        "name": "Away TBD",
-        "shortName": "TBD",
-        "flag": ""
+        "footballDataTeamId": 788,
+        "name": "Switzerland",
+        "shortName": "SUI",
+        "flag": "🇨🇭"
       },
       "score": {
         "home": null,
