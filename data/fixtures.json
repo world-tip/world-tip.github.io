@@ -5,14 +5,14 @@
     "stageStart": "Round of 32",
     "source": "https://www.football-data.org/"
   },
-  "updatedAtUtc": "2026-07-15T23:44:35.883Z",
+  "updatedAtUtc": "2026-07-16T07:36:52.697Z",
   "lockMinutesBeforeKickoff": 15,
   "api": {
     "competitionCode": "WC",
     "season": "2026",
     "endpoint": "https://api.football-data.org/v4/competitions/WC/matches?season=2026",
     "lastStatus": 200,
-    "lastCheckedAtUtc": "2026-07-15T23:44:35.877Z",
+    "lastCheckedAtUtc": "2026-07-16T07:36:52.692Z",
     "throttle": {
       "apiVersion": "v4",
       "authenticatedClient": "Liam",
@@ -982,10 +982,10 @@
       },
       "awayTeam": {
         "id": "away",
-        "footballDataTeamId": null,
-        "name": "Away TBD",
-        "shortName": "TBD",
-        "flag": ""
+        "footballDataTeamId": 770,
+        "name": "England",
+        "shortName": "ENG",
+        "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"
       },
       "score": {
         "home": null,
@@ -1013,10 +1013,10 @@
       },
       "awayTeam": {
         "id": "away",
-        "footballDataTeamId": null,
-        "name": "Away TBD",
-        "shortName": "TBD",
-        "flag": ""
+        "footballDataTeamId": 762,
+        "name": "Argentina",
+        "shortName": "ARG",
+        "flag": "🇦🇷"
       },
       "score": {
         "home": null,
