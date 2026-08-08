@@ -5,14 +5,14 @@
     "stageStart": "Round of 32",
     "source": "https://www.football-data.org/"
   },
-  "updatedAtUtc": "2026-08-08T20:00:21.538Z",
+  "updatedAtUtc": "2026-08-08T20:39:52.284Z",
   "lockMinutesBeforeKickoff": 15,
   "api": {
     "competitionCode": "WC",
     "season": "2026",
     "endpoint": "https://api.football-data.org/v4/competitions/WC/matches?season=2026",
     "lastStatus": 200,
-    "lastCheckedAtUtc": "2026-08-08T20:00:21.532Z",
+    "lastCheckedAtUtc": "2026-08-08T20:39:52.279Z",
     "throttle": {
       "apiVersion": "v4",
       "authenticatedClient": "Liam",
